@@ -1,0 +1,10 @@
+{
+  "sub": "gustavo@email.com",
+  "email_verified": true,
+  "name": "Gustavo Teste",
+  "groups": ["coordenadores"],
+  "preferred_username": "gustavo",
+  "given_name": "Gustavo",
+  "family_name": "Teste",
+  "email": "gustavo@email.com"
+}

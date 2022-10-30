@@ -1,0 +1,6 @@
+{
+  "acces_token": "token_teste",
+  "id_token": "id_token",
+  "refresh_token": "refresh_token",
+  "expires_at": 1800
+}
