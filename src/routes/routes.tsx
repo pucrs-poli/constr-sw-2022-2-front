@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import { AuthContext } from 'contexts/authContext/authContext';
 import { Permission } from 'models/permission';
 import Forbidden from 'pages/forbidden/forbidden';
@@ -29,7 +30,7 @@ routes.push({
 
 routes.push({
   path: paths.cadastro,
-  component: () => <div>Cadastro</div>,
+  component: () => <Container>Cadastro</Container>,
   exact: true,
   accesso: (p) => p.cadastro.acesso,
 });
