@@ -76,6 +76,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const logout = useCallback(() => {
+    setPermission(undefined);
     sessionStorage.removeItem(TOKEN_STORAGE_KEY);
     history.push(paths.loginPage);
   }, [history]);
