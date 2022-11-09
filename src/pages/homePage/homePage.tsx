@@ -1,17 +1,9 @@
-import { Button, Container, Grid } from '@mui/material';
-import { AuthContext } from 'contexts/authContext/authContext';
-import { useContext } from 'react';
+import { Grid } from '@mui/material';
 
 export default function HomePage() {
-  const { logout } = useContext(AuthContext);
   return (
-    <Container>
-      <Grid>
-        HomePage
-        <Button variant='outlined' onClick={logout}>
-          Sair
-        </Button>
-      </Grid>
-    </Container>
+    <Grid container spacing={-1}>
+      <Grid>HomePage</Grid>
+    </Grid>
   );
 }

@@ -1,15 +1,16 @@
 export enum GrupoUsuario {
-  Estudante = 'alunos',
-  Professor = 'professores',
-  Coordenador = 'coordenadores',
+  Estudante = '/alunos',
+  Professor = '/professores',
+  Coordenador = '/coordenadores',
 }
 
 export type TokenType = {
-  // TODO: MAPEAR ESTE TIPO
   access_token: string;
+  token_type: string;
   id_token: string;
+  expires_in: number;
   refresh_token: string;
-  expires_at: number;
+  refresh_expires_in: number;
 };
 
 export type UsuarioType = {

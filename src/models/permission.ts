@@ -1,24 +1,27 @@
 import { AlunoPermission } from 'libraries/permissions/aluno';
 import { CoordenadorPermission } from 'libraries/permissions/coordenador';
 import { ProfessorPermission } from 'libraries/permissions/professor';
+import { getMergedObjects } from 'utils/parse';
 import { GrupoUsuario } from './usuario';
 
 export type Permission = {
+  key: GrupoUsuario | GrupoUsuario[];
   cadastro: {
     acesso: boolean;
     edicao: boolean;
   };
 };
 
-export const userPermissionByGroup = (group: GrupoUsuario) => {
-  switch (group) {
-    case GrupoUsuario.Coordenador:
-      return CoordenadorPermission;
-    case GrupoUsuario.Professor:
-      return ProfessorPermission;
-    case GrupoUsuario.Estudante:
-      return AlunoPermission;
-    default:
-      return null;
-  }
+export const userPermissionByGroup = (
+  groups: GrupoUsuario[]
+): Permission | undefined => {
+  const permissions = [
+    CoordenadorPermission,
+    ProfessorPermission,
+    AlunoPermission,
+  ];
+
+  return getMergedObjects(
+    ...permissions.filter((p) => groups.includes(p.key as GrupoUsuario))
+  ) as Permission;
 };

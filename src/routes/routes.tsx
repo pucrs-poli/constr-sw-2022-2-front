@@ -10,7 +10,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { REDIRECT_URL_KEY } from 'utils/html';
 
 interface RouteProps extends ComponentProps<typeof Route> {
-  accesso?: (p: Permission) => boolean;
+  acesso?: (p: Permission) => boolean;
 }
 
 export const paths = {
@@ -21,25 +21,25 @@ export const paths = {
 
 const routes: RouteProps[] = [];
 
-// Home Page
+// Home Page (rota aberta para usuarios LOGADOS)
 routes.push({
   path: paths.homePage,
   component: HomePage,
   exact: true,
 });
 
+// Rota privada (só quem tem acesso)
 routes.push({
   path: paths.cadastro,
   component: () => <Container>Cadastro</Container>,
   exact: true,
-  accesso: (p) => p.cadastro.acesso,
+  acesso: (p) => p.cadastro.acesso,
 });
 
 // Not Found - Deixar esta por último!
 routes.push({
   path: '*',
   component: NotFound,
-  exact: true,
 });
 
 sessionStorage.setItem(REDIRECT_URL_KEY, window.location.pathname);
@@ -51,7 +51,9 @@ export default function Routes() {
       {permission ? (
         routes.map((r, i) => {
           const component =
-            !r.accesso || r.accesso(permission) ? r.component : Forbidden;
+            typeof r.acesso === 'undefined' || r.acesso(permission)
+              ? r.component
+              : Forbidden;
           return <Route {...r} key={i} component={component} />;
         })
       ) : (

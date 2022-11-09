@@ -17,6 +17,7 @@ export const loadEnvironment = async () => {
     return data;
   } catch (err) {
     alert('Não foi possível carregar as variáveis de ambiente!');
+    return null;
   }
 };
 

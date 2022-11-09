@@ -1,18 +1,32 @@
 import { TokenType, UsuarioType } from 'models/usuario';
 import { toRequest } from 'utils/request';
 import { api } from './api';
-import { authEndpoint } from './endpoints';
+import { getAuthEndpoint } from './endpoints';
 
 export const postLogin = (username: string, encriptedPassword: string) => {
-  const url = `${authEndpoint}/login`;
+  const url = `${getAuthEndpoint()}/login`;
+  const params = new URLSearchParams();
+  params.append('username', username);
+  params.append('password', window.atob(encriptedPassword));
   return toRequest<TokenType>(
     api.post,
-    [url, { username, password: window.atob(encriptedPassword) }],
+    [
+      url,
+      params,
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      },
+    ],
     'login'
   );
 };
 
-export const postUserInfo = () => {
-  const url = `${authEndpoint}/login`;
-  return toRequest<UsuarioType>(api.post, [url], 'userInfo');
+export const getUserInfo = () => {
+  const url = `${getAuthEndpoint()}/user-info`;
+  return toRequest<UsuarioType>(api.get, [url], 'userInfo');
+};
+
+export const postRefreshToken = (refreshToken: string) => {
+  const url = `${getAuthEndpoint()}/refresh-token`;
+  return toRequest<TokenType>(api.post, [url, refreshToken], 'refreshToken');
 };

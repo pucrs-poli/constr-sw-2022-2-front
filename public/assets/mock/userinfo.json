@@ -1,10 +1,10 @@
 {
-  "sub": "gustavo@email.com",
-  "email_verified": true,
-  "name": "Gustavo Teste",
-  "groups": ["coordenadores"],
-  "preferred_username": "gustavo",
+  "sub": "af44cb6a-1979-48fd-99bf-25b139d5f4a1",
+  "email_verified": false,
+  "name": "Gustavo Vidaletti",
+  "groups": ["/coordenadores"],
+  "preferred_username": "gustavo.vidaletti@gmail.com",
   "given_name": "Gustavo",
-  "family_name": "Teste",
-  "email": "gustavo@email.com"
+  "family_name": "Vidaletti",
+  "email": "gustavo.vidaletti@gmail.com"
 }
