@@ -1,7 +1,6 @@
 import { AccountCircleRounded } from '@mui/icons-material';
 import { Button, Grid, IconButton, Popover } from '@mui/material';
 import HeaderLogo from 'assets/icons/headerLogo';
-import Logo from 'assets/icons/logo';
 import { AuthContext } from 'contexts/authContext/authContext';
 import { useContext, useState } from 'react';
 import styles from './header.scss';
