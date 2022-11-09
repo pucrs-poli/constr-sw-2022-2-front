@@ -1,5 +1,6 @@
 import { AccountCircleRounded } from '@mui/icons-material';
 import { Button, Grid, IconButton, Popover } from '@mui/material';
+import HeaderLogo from 'assets/icons/headerLogo';
 import Logo from 'assets/icons/logo';
 import { AuthContext } from 'contexts/authContext/authContext';
 import { useContext, useState } from 'react';
@@ -13,7 +14,7 @@ export default function Header() {
 
   return (
     <header className={rootClassName}>
-      <Logo height={35} />
+      <HeaderLogo height={18} />
       {!!userData && (
         <IconButton
           onClick={(event) => {
