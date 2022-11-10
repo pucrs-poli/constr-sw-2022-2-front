@@ -1,9 +1,11 @@
 import { AccountCircleRounded, MenuRounded } from '@mui/icons-material';
-import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
+import { Button, Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import HeaderLogo from 'assets/icons/headerLogo';
 import LeftMenu from 'components/leftMenu/leftMenu';
 import { AuthContext } from 'contexts/authContext/authContext';
 import { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { paths } from 'routes/routes';
 import styles from './header.scss';
 const { rootClassName } = styles;
 
@@ -12,6 +14,7 @@ export default function Header() {
   const [menuOpened, setMenuOpened] = useState(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const history = useHistory();
 
   return (
     <header className={rootClassName}>
@@ -19,23 +22,33 @@ export default function Header() {
       <Grid gap={1} className={`${rootClassName}-left-content`}>
         {!!userData && (
           <IconButton
+            color='secondary'
             onClick={() => {
               setMenuOpened(!menuOpened);
             }}
           >
-            <MenuRounded color='secondary' />
+            <MenuRounded />
           </IconButton>
         )}
-        <HeaderLogo height={18} />
+        <Button
+          color='secondary'
+          onClick={() => {
+            history.push(paths.homePage);
+          }}
+          disabled={!userData}
+        >
+          <HeaderLogo height={18} />
+        </Button>
       </Grid>
       {!!userData && (
         <IconButton
+          color='secondary'
           onClick={(event) => {
             setAnchorEl(event.currentTarget);
             setUserMenuOpened(!userMenuOpened);
           }}
         >
-          <AccountCircleRounded color='secondary' />
+          <AccountCircleRounded />
         </IconButton>
       )}
       <Menu
