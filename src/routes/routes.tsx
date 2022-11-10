@@ -7,6 +7,7 @@ import Login from 'pages/login/login';
 import NotFound from 'pages/notFound/notFound';
 import PrediosSalas from 'pages/prediosSalas/prediosSalas';
 import Recursos from 'pages/recursos/recursos';
+import Aulas from 'pages/aulas/aulas';
 import { ComponentProps, Fragment, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { REDIRECT_URL_KEY } from 'utils/html';
@@ -51,6 +52,13 @@ routes.push({
 });
 
 // ... fim Rotas dos Grupos
+
+routes.push({
+  path: paths.aulas,
+  component: Aulas,
+  exact: true,
+  acesso: () => true, // TODO: Checar permissões corretamente
+});
 
 // Rota privada (só quem tem acesso)
 routes.push({
