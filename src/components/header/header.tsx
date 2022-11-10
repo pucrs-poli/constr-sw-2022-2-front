@@ -1,6 +1,7 @@
-import { AccountCircleRounded } from '@mui/icons-material';
-import { Button, Grid, IconButton, Popover } from '@mui/material';
+import { AccountCircleRounded, MenuRounded } from '@mui/icons-material';
+import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import HeaderLogo from 'assets/icons/headerLogo';
+import LeftMenu from 'components/leftMenu/leftMenu';
 import { AuthContext } from 'contexts/authContext/authContext';
 import { useContext, useState } from 'react';
 import styles from './header.scss';
@@ -9,25 +10,38 @@ const { rootClassName } = styles;
 export default function Header() {
   const { userData, logout } = useContext(AuthContext);
   const [menuOpened, setMenuOpened] = useState(false);
+  const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   return (
     <header className={rootClassName}>
-      <HeaderLogo height={18} />
+      <LeftMenu opened={menuOpened} setOpened={setMenuOpened} />
+      <Grid gap={1} className={`${rootClassName}-left-content`}>
+        {!!userData && (
+          <IconButton
+            onClick={() => {
+              setMenuOpened(!menuOpened);
+            }}
+          >
+            <MenuRounded color='secondary' />
+          </IconButton>
+        )}
+        <HeaderLogo height={18} />
+      </Grid>
       {!!userData && (
         <IconButton
           onClick={(event) => {
             setAnchorEl(event.currentTarget);
-            setMenuOpened(!menuOpened);
+            setUserMenuOpened(!userMenuOpened);
           }}
         >
           <AccountCircleRounded color='secondary' />
         </IconButton>
       )}
-      <Popover
-        open={!!userData && menuOpened}
+      <Menu
+        open={!!userData && userMenuOpened}
         anchorEl={anchorEl}
-        onClose={() => setMenuOpened(false)}
+        onClose={() => setUserMenuOpened(false)}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -37,23 +51,16 @@ export default function Header() {
           horizontal: 'right',
         }}
       >
-        <Grid className={`${rootClassName}-menu-item`}>
-          <Button variant='text' disabled>
-            {userData?.name}
-          </Button>
-        </Grid>
-        <Grid className={`${rootClassName}-menu-item`}>
-          <Button
-            variant='text'
-            onClick={() => {
-              setMenuOpened(false);
-              setTimeout(logout, 100);
-            }}
-          >
-            Sair
-          </Button>
-        </Grid>
-      </Popover>
+        <MenuItem disabled>{userData?.name}</MenuItem>
+        <MenuItem
+          onClick={() => {
+            setUserMenuOpened(false);
+            setTimeout(logout, 100);
+          }}
+        >
+          Sair
+        </MenuItem>
+      </Menu>
     </header>
   );
 }

@@ -1,4 +1,4 @@
 {
   "isOffline": false,
-  "auth": "http://localhost:8091"
+  "auth": "http://192.168.15.137:8091"
 }

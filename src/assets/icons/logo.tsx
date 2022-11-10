@@ -1,6 +1,6 @@
 export default function Logo({
   width,
-  height = 294,
+  height,
 }: {
   width?: string | number;
   height?: string | number;
@@ -8,7 +8,7 @@ export default function Logo({
   return (
     <svg
       width={width}
-      height={height}
+      height={!width && !height ? 294 : height}
       viewBox='0 0 580 294'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

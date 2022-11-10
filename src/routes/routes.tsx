@@ -5,6 +5,8 @@ import Forbidden from 'pages/forbidden/forbidden';
 import HomePage from 'pages/homePage/homePage';
 import Login from 'pages/login/login';
 import NotFound from 'pages/notFound/notFound';
+import PrediosSalas from 'pages/prediosSalas/prediosSalas';
+import Recursos from 'pages/recursos/recursos';
 import { ComponentProps, Fragment, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { REDIRECT_URL_KEY } from 'utils/html';
@@ -16,6 +18,13 @@ interface RouteProps extends ComponentProps<typeof Route> {
 export const paths = {
   homePage: '/',
   loginPage: '/login',
+  prediosSalas: '/predios-salas',
+  recursos: '/recursos',
+  disciplinas: '/disciplinas',
+  turmas: '/turmas',
+  aulas: '/aulas',
+  reservas: '/reservas',
+  // Exemplo:
   cadastro: '/cadastro',
 };
 
@@ -27,6 +36,21 @@ routes.push({
   component: HomePage,
   exact: true,
 });
+
+// ... inicio Rotas dos Grupos
+routes.push({
+  path: paths.prediosSalas,
+  component: PrediosSalas,
+  exact: true,
+});
+
+routes.push({
+  path: paths.recursos,
+  component: Recursos,
+  exact: true,
+});
+
+// ... fim Rotas dos Grupos
 
 // Rota privada (só quem tem acesso)
 routes.push({

@@ -8,7 +8,7 @@ export default function HeaderLogo({
   return (
     <svg
       width={width}
-      height={height}
+      height={!width && !height ? 60 : height}
       viewBox='0 0 510 60'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

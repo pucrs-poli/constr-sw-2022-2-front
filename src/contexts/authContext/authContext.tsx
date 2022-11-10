@@ -76,7 +76,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const handleRefreshToken = useCallback(
     (token: TokenType) => {
-      console.log('token expires in ', token.expires_in);
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(async () => {
         try {
@@ -118,7 +117,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
-    console.log('token: ', localStorage.getItem(TOKEN_STORAGE_KEY));
     if (localStorage.getItem(TOKEN_STORAGE_KEY)) {
       setLoadingUserData(true);
       getUserInfo()

@@ -14,12 +14,8 @@ $rootClassName: header-component;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-}
-
-.#{$rootClassName}-menu-item {
-  width: 100%;
-  button {
-    width: 100%;
-    justify-content: flex-end;
+  .#{$rootClassName}-left-content {
+    display: flex;
+    align-items: center;
   }
 }

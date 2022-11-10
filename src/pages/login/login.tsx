@@ -1,5 +1,6 @@
-import { LoginRounded, RefreshRounded } from '@mui/icons-material';
-import { Button, Grid, Input } from '@mui/material';
+import { LoginRounded } from '@mui/icons-material';
+import { Button, CircularProgress, Grid, Input } from '@mui/material';
+import Logo from 'assets/icons/logo';
 import { AuthContext } from 'contexts/authContext/authContext';
 import { useContext, useState } from 'react';
 import styles from './login.scss';
@@ -11,7 +12,22 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   return (
-    <Grid className={rootClassName}>
+    <Grid
+      container
+      gap={1}
+      padding={1}
+      flexDirection='column'
+      className={rootClassName}
+    >
+      <Grid
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+        marginTop={3}
+        marginBottom={3}
+      >
+        <Logo width='90%' />
+      </Grid>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -41,7 +57,13 @@ export default function Login() {
         <Grid className={`${rootClassName}-item`}>
           <Button
             fullWidth
-            startIcon={loadingUserData ? <RefreshRounded /> : <LoginRounded />}
+            startIcon={
+              loadingUserData ? (
+                <CircularProgress color='secondary' size={20} />
+              ) : (
+                <LoginRounded />
+              )
+            }
             disabled={!username || !password}
             type='submit'
           >
