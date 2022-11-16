@@ -1,4 +1,4 @@
-import { Breadcrumbs, Grid, Link, Typography } from '@mui/material';
+import { Breadcrumbs, Grid, Link, Typography, Container, Box } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 import { paths } from 'routes/routes';
@@ -22,9 +22,10 @@ export default function Disciplinas() {
           <Typography color='text.primary'>Disciplinas</Typography>
         </Breadcrumbs>
       </Grid>
-      <Grid>Conteúdo da página</Grid>
-      <Grid>Conteúdo da página</Grid>
-      <Grid>Conteúdo da página</Grid>
+      <Container maxWidth="md">
+        <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />
+        <img src="src/pages/disciplinas/scroll-disciplinas.png" alt="776tgekjf" />
+      </Container>
     </Grid>
   );
 }
