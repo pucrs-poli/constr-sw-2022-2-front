@@ -7,6 +7,7 @@ import Login from 'pages/login/login';
 import NotFound from 'pages/notFound/notFound';
 import PrediosSalas from 'pages/prediosSalas/prediosSalas';
 import Recursos from 'pages/recursos/recursos';
+import Disciplinas from 'pages/disciplinas/disciplinas';
 import { ComponentProps, Fragment, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { REDIRECT_URL_KEY } from 'utils/html';
@@ -47,6 +48,12 @@ routes.push({
 routes.push({
   path: paths.recursos,
   component: Recursos,
+  exact: true,
+});
+
+routes.push({
+  path: paths.disciplinas,
+  component: Disciplinas,
   exact: true,
 });
 
