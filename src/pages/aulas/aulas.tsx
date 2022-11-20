@@ -9,63 +9,21 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import AddIcon from '@mui/icons-material/Add';
 
-interface Class {
-  id?: number;
-  name?: string,
-  group?: string,
-  resource?: string,
-  resourceId?: number
-}
+import { getClasses } from 'services/classes';
+import { Class, CreateClass } from 'models/class';
 
 export default function Aulas() {
   const [classes, setClasses] = useState<Class[]>();
   const [searchKey, setSearchKey] = useState<string>("");
   const [createClass, setCreateClass] = useState<boolean>(false);
-  const [editClass, setEditClass] = useState<Class>();
+  const [editClass, setEditClass] = useState<CreateClass>();
   const [excludeClassId, setExcludeClassId] = useState<number>();
 
   const history = useHistory();
 
 
   useEffect(() => {
-    setClasses([
-      {
-        id: 1,
-        name: "Construção de Software",
-        group: "123",
-        resource: "notebook x12",
-        resourceId: 10
-      },
-      {
-        id: 2,
-        name: "Dasein",
-        group: "123",
-        resource: "notebook x12",
-        resourceId: 10
-
-      },
-      {
-        id: 3,
-        name: "Dasein",
-        group: "123",
-        resource: "notebook x12",
-        resourceId: 20
-      },
-      {
-        id: 4,
-        name: "Dasein",
-        group: "123",
-        resource: "notebook x12",
-        resourceId: 30
-      },
-      {
-        id: 5,
-        name: "Dasein",
-        group: "123",
-        resource: "notebook x12",
-        resourceId: 20
-      }
-    ])
+    getClasses().then(response => response.data).then(setClasses);
   }, [])
 
   const style = {
@@ -174,18 +132,18 @@ export default function Aulas() {
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                   {createClass ? "Cadastrar " : "Editar "}  aula
                 </Typography>
-                <TextField label="Disciplina" fullWidth value={editClass?.name} onChange={(e) => setEditClass({ ...editClass, name: e.target.value as string })} />
+                <TextField label="Disciplina" fullWidth value={editClass?.group?.subject?.name} onChange={(e) => {/* Filer options on groups textfield */}} />
                 <Box m={2} />
-                <TextField label="Número da Turma" fullWidth value={editClass?.group} onChange={(e) => setEditClass({ ...editClass, group: e.target.value as string })} />
+                <TextField label="Número da Turma" fullWidth value={editClass?.group?.numGroup} onChange={(e) => setEditClass({ ...editClass!, group: { id: parseInt(e.target.value) } })} />
                 <Box m={2} />
                 <InputLabel id="reservation-select-label">Reserva</InputLabel>
                 <Select
                   id="reservation-select"
                   labelId='reservation-select-label'
-                  value={editClass?.resourceId}
+                  value={editClass?.resources[0].id}
                   label="Reserva"
                   fullWidth
-                  onChange={(e) => setEditClass({ ...editClass, resourceId: e.target.value as number })}
+                  onChange={(e) => setEditClass({ ...editClass!, resources: [{ id: e.target.value as number }]})}
                 >
                   <MenuItem value={10}>Note Positivo</MenuItem>
                   <MenuItem value={20}>Mouse Multilaser</MenuItem>
@@ -193,7 +151,7 @@ export default function Aulas() {
                 </Select>
                 <Box m={16} />
                 <Grid container justifyContent={"end"}>
-                  <Button onClick={closeModal}>Cancelar</Button>
+                  <Button onClick={() => setCreateClass(false)}>Cancelar</Button>
                   {createClass ? <Button onClick={async () => await postClass()}>Criar</Button> : <Button onClick={async () => await patchClass()}>Criar</Button>}
                 </Grid>
               </>
@@ -213,10 +171,10 @@ export default function Aulas() {
                       alignItems="top"
                       mb={2}>
                       <Typography variant="h5" component="div">
-                        {it.name}
+                        {it.group.subject?.name}
                       </Typography>
                       <Grid>
-                        <IconButton onClick={() => { setEditClass(it) }}>
+                        <IconButton onClick={() => { setEditClass({ ...it, resources: it.reservations.map(x => x.resource) }) }}>
                           <CreateRoundedIcon />
                         </IconButton >
                         <IconButton onClick={() => { setExcludeClassId(it.id) }}>
@@ -225,10 +183,10 @@ export default function Aulas() {
                       </Grid>
                     </Grid>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      Turma: {it.group}
+                      Turma: {it.group?.numGroup}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      Reserva: {it.resource}
+                      Reserva: {it.reservations.map(reservation => reservation.resource.name).join(', ')}
                     </Typography>
                   </CardContent>
                 </Card>

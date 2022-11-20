@@ -1,4 +1,5 @@
 {
   "isOffline": true,
-  "auth": "http://localhost:8091"
+  "auth": "http://localhost:8091",
+  "classes": "https://8092-pucrspoli-constrsw20222-5uwu1stt2g9.ws-us77.gitpod.io"
 }
