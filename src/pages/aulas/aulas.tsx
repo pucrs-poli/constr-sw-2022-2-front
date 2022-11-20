@@ -10,17 +10,18 @@ import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import AddIcon from '@mui/icons-material/Add';
 
 interface Class {
-  name: string,
-  group: string,
-  resource: string
+  id?: number;
+  name?: string,
+  group?: string,
+  resource?: string,
+  resourceId?: number
 }
 
 export default function Aulas() {
-  const [classes, setClasses] = useState<any[]>();
+  const [classes, setClasses] = useState<Class[]>();
   const [searchKey, setSearchKey] = useState<string>("");
   const [createClass, setCreateClass] = useState<boolean>(false);
-  const [editClass, ediClass] = useState<Class>();
-  const [reservation, setReservation] = useState<number>()
+  const [editClass, setEditClass] = useState<Class>();
 
   const history = useHistory();
 
@@ -28,29 +29,40 @@ export default function Aulas() {
   useEffect(() => {
     setClasses([
       {
+        id: 1,
         name: "Construção de Software",
         group: "123",
-        resource: "notebook x12"
+        resource: "notebook x12",
+        resourceId: 10
       },
       {
+        id: 2,
         name: "Dasein",
         group: "123",
-        resource: "notebook x12"
+        resource: "notebook x12",
+        resourceId: 10
+
       },
       {
+        id: 3,
         name: "Dasein",
         group: "123",
-        resource: "notebook x12"
+        resource: "notebook x12",
+        resourceId: 20
       },
       {
+        id: 4,
         name: "Dasein",
         group: "123",
-        resource: "notebook x12"
+        resource: "notebook x12",
+        resourceId: 30
       },
       {
+        id: 5,
         name: "Dasein",
         group: "123",
-        resource: "notebook x12"
+        resource: "notebook x12",
+        resourceId: 20
       }
     ])
   }, [])
@@ -68,14 +80,13 @@ export default function Aulas() {
     px: 4,
   };
 
-  const postClass = async () => {
+  const postClass = async () => {}
 
-  }
+  const patchClass = async () => {}
 
   return (
     <Grid container flexDirection='column'>
       <Grid container gap={1} padding={1} flexDirection='column' maxWidth={"90%"}>
-
         <Grid item>
           <Breadcrumbs aria-label='breadcrumb'>
             <Link
@@ -105,7 +116,7 @@ export default function Aulas() {
             width={"50%"}
           >
             <MenuBookRoundedIcon fontSize='large' /><Box mr={1} />
-            <Typography fontWeight={600} fontSize={34}>  Aulas</Typography>
+            <Typography fontWeight={600} fontSize={34}> Aulas</Typography>
           </Grid>
           <TextField InputProps={{
             startAdornment: (
@@ -121,8 +132,11 @@ export default function Aulas() {
 
         <Box sx={{ m: 2 }} />
         <Modal
-          open={createClass}
-          onClose={() => setCreateClass(false)}
+          open={createClass || !!editClass}
+          onClose={() => {
+            setCreateClass(false)
+            setEditClass(undefined)
+          }}
           aria-labelledby="child-modal-title"
           aria-describedby="child-modal-description"
         >
@@ -132,20 +146,20 @@ export default function Aulas() {
               <Typography fontWeight={600} fontSize={34}>  Aulas</Typography>
             </div>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Cadastrar aula
+              {createClass ? "Cadastrar " : "Editar "}  aula
             </Typography>
-            <TextField label="Disciplina" fullWidth />
+            <TextField label="Disciplina" fullWidth value={editClass?.name} onChange={(e) => setEditClass({ ...editClass, name: e.target.value as string })} />
             <Box m={2} />
-            <TextField label="Número da Turma" fullWidth />
+            <TextField label="Número da Turma" fullWidth value={editClass?.group} onChange={(e) => setEditClass({ ...editClass, group: e.target.value as string })} />
             <Box m={2} />
             <InputLabel id="reservation-select-label">Reserva</InputLabel>
             <Select
               id="reservation-select"
               labelId='reservation-select-label'
-              value={reservation}
+              value={editClass?.resourceId}
               label="Reserva"
               fullWidth
-              onChange={(e) => setReservation(e.target.value as number)}
+              onChange={(e) => setEditClass({ ...editClass, resourceId: e.target.value as number })}
             >
               <MenuItem value={10}>Note Positivo</MenuItem>
               <MenuItem value={20}>Mouse Multilaser</MenuItem>
@@ -154,9 +168,8 @@ export default function Aulas() {
             <Box m={16} />
             <Grid container justifyContent={"end"}>
               <Button onClick={() => setCreateClass(false)}>Cancelar</Button>
-              <Button onClick={async () => await postClass()}>Criar</Button>
+              {createClass ? <Button onClick={async () => await postClass()}>Criar</Button> : <Button onClick={async () => await patchClass()}>Criar</Button>}
             </Grid>
-
           </Grid>
         </Modal>
 
@@ -175,7 +188,7 @@ export default function Aulas() {
                         {it.name}
                       </Typography>
                       <Grid>
-                        <IconButton onClick={() => { console.log("Dasein") }}>
+                        <IconButton onClick={() => { setEditClass(it) }}>
                           <CreateRoundedIcon />
                         </IconButton >
                         <IconButton onClick={() => { console.log("Dasein") }}>
