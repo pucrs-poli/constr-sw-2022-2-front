@@ -22,6 +22,7 @@ export default function Aulas() {
   const [searchKey, setSearchKey] = useState<string>("");
   const [createClass, setCreateClass] = useState<boolean>(false);
   const [editClass, setEditClass] = useState<Class>();
+  const [excludeClassId, setExcludeClassId] = useState<number>();
 
   const history = useHistory();
 
@@ -80,9 +81,16 @@ export default function Aulas() {
     px: 4,
   };
 
-  const postClass = async () => {}
+  const postClass = async () => { }
+  const patchClass = async () => { }
+  const deleteClass = async () => { }
 
-  const patchClass = async () => {}
+
+  const closeModal = () => {
+    setCreateClass(false)
+    setEditClass(undefined)
+    setExcludeClassId(undefined)
+  }
 
   return (
     <Grid container flexDirection='column'>
@@ -132,44 +140,64 @@ export default function Aulas() {
 
         <Box sx={{ m: 2 }} />
         <Modal
-          open={createClass || !!editClass}
-          onClose={() => {
-            setCreateClass(false)
-            setEditClass(undefined)
-          }}
+          open={createClass || !!editClass || !!excludeClassId}
+          onClose={closeModal}
           aria-labelledby="child-modal-title"
           aria-describedby="child-modal-description"
         >
           <Grid sx={{ ...style, maxWidth: "50%" }}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <MenuBookRoundedIcon fontSize='large' /><Box mr={1} />
-              <Typography fontWeight={600} fontSize={34}>  Aulas</Typography>
-            </div>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {createClass ? "Cadastrar " : "Editar "}  aula
-            </Typography>
-            <TextField label="Disciplina" fullWidth value={editClass?.name} onChange={(e) => setEditClass({ ...editClass, name: e.target.value as string })} />
-            <Box m={2} />
-            <TextField label="Número da Turma" fullWidth value={editClass?.group} onChange={(e) => setEditClass({ ...editClass, group: e.target.value as string })} />
-            <Box m={2} />
-            <InputLabel id="reservation-select-label">Reserva</InputLabel>
-            <Select
-              id="reservation-select"
-              labelId='reservation-select-label'
-              value={editClass?.resourceId}
-              label="Reserva"
-              fullWidth
-              onChange={(e) => setEditClass({ ...editClass, resourceId: e.target.value as number })}
-            >
-              <MenuItem value={10}>Note Positivo</MenuItem>
-              <MenuItem value={20}>Mouse Multilaser</MenuItem>
-              <MenuItem value={30}>Fone Camelô</MenuItem>
-            </Select>
-            <Box m={16} />
-            <Grid container justifyContent={"end"}>
-              <Button onClick={() => setCreateClass(false)}>Cancelar</Button>
-              {createClass ? <Button onClick={async () => await postClass()}>Criar</Button> : <Button onClick={async () => await patchClass()}>Criar</Button>}
-            </Grid>
+            {excludeClassId ?
+              <>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <MenuBookRoundedIcon fontSize='large' /><Box mr={1} />
+                  <Typography fontWeight={600} fontSize={34}>  Aulas</Typography>
+                </div>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  Excluir aula
+                </Typography>
+                <Box m={2} />
+                <Typography >
+                  Tem certeza que deseja excluir esta aula?
+                </Typography>
+                <Box m={16} />
+                <Grid container justifyContent={"end"}>
+                  <Button onClick={closeModal}>Cancelar</Button>
+                  <Button style={{ color: "#B00020" }} onClick={async () => await deleteClass()}>Criar</Button>
+                </Grid>
+              </>
+              :
+              <>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <MenuBookRoundedIcon fontSize='large' /><Box mr={1} />
+                  <Typography fontWeight={600} fontSize={34}>  Aulas</Typography>
+                </div>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  {createClass ? "Cadastrar " : "Editar "}  aula
+                </Typography>
+                <TextField label="Disciplina" fullWidth value={editClass?.name} onChange={(e) => setEditClass({ ...editClass, name: e.target.value as string })} />
+                <Box m={2} />
+                <TextField label="Número da Turma" fullWidth value={editClass?.group} onChange={(e) => setEditClass({ ...editClass, group: e.target.value as string })} />
+                <Box m={2} />
+                <InputLabel id="reservation-select-label">Reserva</InputLabel>
+                <Select
+                  id="reservation-select"
+                  labelId='reservation-select-label'
+                  value={editClass?.resourceId}
+                  label="Reserva"
+                  fullWidth
+                  onChange={(e) => setEditClass({ ...editClass, resourceId: e.target.value as number })}
+                >
+                  <MenuItem value={10}>Note Positivo</MenuItem>
+                  <MenuItem value={20}>Mouse Multilaser</MenuItem>
+                  <MenuItem value={30}>Fone Camelô</MenuItem>
+                </Select>
+                <Box m={16} />
+                <Grid container justifyContent={"end"}>
+                  <Button onClick={closeModal}>Cancelar</Button>
+                  {createClass ? <Button onClick={async () => await postClass()}>Criar</Button> : <Button onClick={async () => await patchClass()}>Criar</Button>}
+                </Grid>
+              </>
+            }
           </Grid>
         </Modal>
 
@@ -191,7 +219,7 @@ export default function Aulas() {
                         <IconButton onClick={() => { setEditClass(it) }}>
                           <CreateRoundedIcon />
                         </IconButton >
-                        <IconButton onClick={() => { console.log("Dasein") }}>
+                        <IconButton onClick={() => { setExcludeClassId(it.id) }}>
                           <DeleteRoundedIcon color='error' />
                         </IconButton >
                       </Grid>
