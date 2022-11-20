@@ -17,7 +17,7 @@ export const toRequest = <Type = any>(
   offlineJSONName?: string,
   mock?: boolean
 ): Promise<AxiosResponse<Type>> => {
-  if (getEnvironment()?.isOffline || mock) {
+  if (mock !== undefined ? mock : getEnvironment()?.isOffline) {
     const url = `/assets/mock/${offlineJSONName}.json`;
     return axios.get(url);
   } else {

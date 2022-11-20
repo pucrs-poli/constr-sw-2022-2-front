@@ -4,6 +4,7 @@ import { getNoCache } from 'utils/request';
 interface Environment {
   isOffline: boolean;
   auth: string;
+  classes: string;
 }
 
 let loadedEnvironment: Environment;
