@@ -1,7 +1,9 @@
-import { Breadcrumbs, Grid, Link, Typography, Container, Box } from '@mui/material';
+import { Breadcrumbs, Grid, Link, Typography, Container } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 import { paths } from 'routes/routes';
+import CusmtomAccordion from './components/customAccordion';
+import SearchHeader from './components/searchHeader';
 
 export default function Disciplinas() {
   const history = useHistory();
@@ -22,9 +24,11 @@ export default function Disciplinas() {
           <Typography color='text.primary'>Disciplinas</Typography>
         </Breadcrumbs>
       </Grid>
-      <Container maxWidth="md">
-        <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />
-        <img src="src/pages/disciplinas/scroll-disciplinas.png" alt="776tgekjf" />
+      <Container maxWidth='md'>
+        <Grid container>
+          <SearchHeader />
+        </Grid>
+        <CusmtomAccordion />
       </Container>
     </Grid>
   );
