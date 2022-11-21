@@ -8,8 +8,8 @@ import SearchHeader from './components/searchHeader';
 export default function Disciplinas() {
   const history = useHistory();
   return (
-    <Grid container gap={1} padding={1} flexDirection='column'>
-      <Grid item>
+    <Grid container gap={1} padding={1} margin={2} flexDirection='column'>
+      <Grid item xs={12}>
         <Breadcrumbs aria-label='breadcrumb'>
           <Link
             underline='hover'
@@ -24,12 +24,12 @@ export default function Disciplinas() {
           <Typography color='text.primary'>Disciplinas</Typography>
         </Breadcrumbs>
       </Grid>
-      <Container maxWidth='md'>
-        <Grid container>
+      <Grid item xs={12}>
+        <Container maxWidth='md' sx={{ backgroundColor: '#f5f5f5', paddingTop: "20px", paddingBottom: "20px", borderRadius: "1%"}}>
           <SearchHeader />
-        </Grid>
-        <CusmtomAccordion />
-      </Container>
+          <CusmtomAccordion />
+        </Container>
+      </Grid>
     </Grid>
   );
 }
