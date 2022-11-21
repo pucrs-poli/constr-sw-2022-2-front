@@ -25,7 +25,7 @@ export default function Disciplinas() {
         </Breadcrumbs>
       </Grid>
       <Grid item xs={12}>
-        <Container maxWidth='md' sx={{ backgroundColor: '#f5f5f5', paddingTop: "20px", paddingBottom: "20px", borderRadius: "1%"}}>
+        <Container maxWidth='md' sx={{ backgroundColor: '#f5f5f5', paddingTop: "20px", paddingBottom: "20px", borderRadius: "1%", height: ""}}>
           <SearchHeader />
           <CusmtomAccordion />
         </Container>
