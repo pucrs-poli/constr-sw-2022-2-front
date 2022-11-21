@@ -8,6 +8,7 @@ import NotFound from 'pages/notFound/notFound';
 import PrediosSalas from 'pages/prediosSalas/prediosSalas';
 import Recursos from 'pages/recursos/recursos';
 import Disciplinas from 'pages/disciplinas/disciplinas';
+import Turmas from 'pages/turmas/turmas';
 import { ComponentProps, Fragment, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { REDIRECT_URL_KEY } from 'utils/html';
@@ -42,6 +43,12 @@ routes.push({
 routes.push({
   path: paths.prediosSalas,
   component: PrediosSalas,
+  exact: true,
+});
+
+routes.push ({
+  path: paths.turmas,
+  component: Turmas,
   exact: true,
 });
 
