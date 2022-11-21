@@ -1,4 +1,4 @@
-import { Breadcrumbs, Grid, Link, Typography } from '@mui/material';
+import { Breadcrumbs, Grid, Link, Typography, Box, Container } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 import { paths } from 'routes/routes';
@@ -22,9 +22,13 @@ export default function Recursos() {
           <Typography color='text.primary'>Recursos</Typography>
         </Breadcrumbs>
       </Grid>
-      <Grid>Conteúdo da página</Grid>
-      <Grid>Conteúdo da página</Grid>
-      <Grid>Conteúdo da página</Grid>
+            {/* <Grid>
+        <Container maxWidth='md' sx={{ backgroundColor: '#f5f5f5', paddingTop: "20px", paddingBottom: "20px", borderRadius: "1%"}}>
+          <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
+            <h1>Custom Accordion</h1>
+          </Box>
+        </Container>
+      </Grid> */}
     </Grid>
   );
 }
