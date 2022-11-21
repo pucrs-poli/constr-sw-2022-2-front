@@ -5,6 +5,7 @@ import Forbidden from 'pages/forbidden/forbidden';
 import HomePage from 'pages/homePage/homePage';
 import Login from 'pages/login/login';
 import NotFound from 'pages/notFound/notFound';
+import Predio from 'pages/predio/predio';
 import PrediosSalas from 'pages/prediosSalas/prediosSalas';
 import Recursos from 'pages/recursos/recursos';
 import { ComponentProps, Fragment, useContext } from 'react';
@@ -19,6 +20,8 @@ export const paths = {
   homePage: '/',
   loginPage: '/login',
   prediosSalas: '/predios-salas',
+  predio: '/predios-salas/novo',
+  editarPredio: '/predios-salas/:id',
   recursos: '/recursos',
   disciplinas: '/disciplinas',
   turmas: '/turmas',
@@ -41,6 +44,12 @@ routes.push({
 routes.push({
   path: paths.prediosSalas,
   component: PrediosSalas,
+  exact: true,
+});
+
+routes.push({
+  path: paths.predio,
+  component: Predio,
   exact: true,
 });
 

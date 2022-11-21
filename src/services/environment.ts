@@ -4,6 +4,7 @@ import { getNoCache } from 'utils/request';
 interface Environment {
   isOffline: boolean;
   auth: string;
+  prediosSalas: string;
 }
 
 let loadedEnvironment: Environment;
