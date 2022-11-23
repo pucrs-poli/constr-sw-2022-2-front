@@ -1,7 +1,6 @@
 import { Breadcrumbs, Grid, Link, Typography, Card } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import SpeedDialCustom from './components/speedDialCustom';
-import RecursosData from './mock/mockRecursos.json';
 import { paths } from 'routes/routes';
 import ResourcesService from 'services/resources';
 import APIStub from './api/APIStub';
@@ -57,8 +56,17 @@ export default function Recursos() {
                   cursor: 'pointer',
                   padding: '10px',
                 }}
+                onClick={() => {
+                  history.push(paths.recursos + '/' + rec.id);
+                }}
               >
                 <h3>{rec.description}</h3>
+                <p>Tipo do Recurso: {rec.resourceType.name}</p>
+                <p>Status: {rec.status}</p>
+                <h4>Detalhes:</h4>
+                {rec.details.map((detail) => {
+                  return <p>{detail.name}</p>;
+                })}
               </Card>
             );
           })}
