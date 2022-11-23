@@ -9,10 +9,14 @@ import {
   TextField,
   Button,
   IconButton,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
-// import { DeleteIcon } from '@mui/icons-material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { useHistory } from 'react-router-dom';
 import SpeedDialCustom from './components/speedDialCustom';
 import { paths } from 'routes/routes';
@@ -38,14 +42,16 @@ export default function Recursos() {
   /*
     Using stub for mocks, chage APIStub to API when using real API.
   */
-  // const resourcesService = new ResourcesService(new APIStub());
+  const resourcesService = new ResourcesService(new APIStub());
   const resourcesServiceBack = new ResourcesService(new API());
 
+  const [resourcesList, setResourcesList] = useState<Resource[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
   useEffect(() => {
     const getAllResources = async () => {
-      // const response = await resourcesService.getAll();
-      const response = await resourcesServiceBack.getAll();
+      const response = await resourcesService.getAll();
+      // const response = await resourcesServiceBack.getAll();
+      setResourcesList(response);
       setResources(response);
     };
     getAllResources();
@@ -64,7 +70,18 @@ export default function Recursos() {
 
   const [createModal2Open, setCreateModal2Open] = useState(false);
 
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
+
   const [name, setName] = useState('');
+
+  const [filterName, setFilterName] = useState('');
+  const handleChange = (event: SelectChangeEvent) => {
+    setFilterName(event.target.value as string);
+  };
+
+  const resourceTypesNames = Array.from(
+    new Set(resourcesList.map((rec) => rec.resourceType.name))
+  );
 
   const history = useHistory();
   return (
@@ -86,7 +103,14 @@ export default function Recursos() {
           </Breadcrumbs>
         </Grid>
         <Grid container flexDirection='column' gap={5} padding={1}>
-          <Grid container flexDirection='row'>
+          <Grid
+            container
+            flexDirection='row'
+            style={{
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <h1
               style={{
                 marginBottom: 0,
@@ -94,6 +118,13 @@ export default function Recursos() {
             >
               Recursos
             </h1>
+            <IconButton
+              onClick={() => {
+                setFilterModalOpen(true);
+              }}
+            >
+              <FilterAltIcon style={{ color: 'Black', fontSize: 20 }} />
+            </IconButton>
           </Grid>
           {resources.map((rec) => {
             return (
@@ -274,6 +305,56 @@ export default function Recursos() {
               }}
             >
               Criar
+            </Button>
+          </>
+        </Box>
+      </Modal>
+      <Modal
+        open={filterModalOpen}
+        onClose={() => {
+          setFilterModalOpen(false);
+        }}
+      >
+        <Box sx={style}>
+          <>
+            <Typography id='modal-modal-title' variant='h6' component='h2'>
+              Filtrar por Tipo de Recurso
+            </Typography>
+
+            <InputLabel id='demo-simple-select-label' size='normal'>
+              Age
+            </InputLabel>
+            <Select
+              autoWidth={true}
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={filterName}
+              label='Age'
+              onChange={handleChange}
+            >
+              {resourceTypesNames.map((rec) => {
+                return <MenuItem value={rec}>{rec}</MenuItem>;
+              })}
+            </Select>
+
+            <Button
+              style={{ marginTop: '30px', width: '100%' }}
+              variant='contained'
+              onClick={() => {
+                try {
+                  console.log(filterName);
+                  setResources(
+                    resourcesList.filter((element) => {
+                      return element.resourceType.name === filterName;
+                    })
+                  );
+                  setFilterModalOpen(false);
+                } catch (error) {
+                  alert('Erro ao criar tipo de recurso!');
+                }
+              }}
+            >
+              Pesquisar
             </Button>
           </>
         </Box>
