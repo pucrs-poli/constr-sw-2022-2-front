@@ -322,14 +322,14 @@ export default function Recursos() {
             </Typography>
 
             <InputLabel id='demo-simple-select-label' size='normal'>
-              Age
+              Tipo
             </InputLabel>
             <Select
               autoWidth={true}
               labelId='demo-simple-select-label'
               id='demo-simple-select'
               value={filterName}
-              label='Age'
+              label='Tipo'
               onChange={handleChange}
             >
               {resourceTypesNames.map((rec) => {
