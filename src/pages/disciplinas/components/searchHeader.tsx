@@ -10,14 +10,14 @@ export default function SearchHeader() {
           <BookIcon color='primary' sx={{ fontSize: '50px' }} />
         </Grid>
         <Grid item xs={3}>
-          <Typography variant='h4' sx={{fontWeight: "bold", marginTop: "11px"}}>Disciplinas</Typography>
+          <Typography variant='h4' sx={{ fontWeight: "bold", marginTop: "11px" }}>Disciplinas</Typography>
         </Grid>
-        <Grid item xs={4}/>
+        <Grid item xs={4} />
         <Grid item xs={4}>
-            <SearchField/>
+          <SearchField />
         </Grid>
         <Grid item xs={3}>
-          <Typography variant='h5' sx={{fontWeight: "bold", marginTop: "25px", color: "#575757"}}>Lista de disciplinas</Typography>
+          <Typography variant='h5' sx={{ fontWeight: "bold", marginTop: "25px", color: "#575757" }}>Lista de disciplinas</Typography>
         </Grid>
       </Grid>
     </Box>

@@ -1,7 +1,10 @@
 import { IconButton, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import disciplinasContext from 'contexts/disciplinasContext/disciplinasContext';
 
 export default function SearchField() {
+  const {disciplinas, setDisciplinas} = disciplinasContext();
+
   return (
     <TextField
       id='search-field'
@@ -10,7 +13,7 @@ export default function SearchField() {
       fullWidth={true}
       InputProps={{
         endAdornment: (
-          <IconButton>
+          <IconButton onClick={() => setDisciplinas([])}>
             <SearchIcon />
           </IconButton>
         ),

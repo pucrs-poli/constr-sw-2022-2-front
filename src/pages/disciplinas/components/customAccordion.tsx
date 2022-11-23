@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -9,21 +9,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { IDisciplina } from '../disciplinas';
 import { useState } from 'react';
+import disciplinasContext from 'contexts/disciplinasContext/disciplinasContext';
 
-const CusmtomAccordion = (disciplinas: any) => {
-  var listaDisciplinas: IDisciplina[] = disciplinas.disciplinas;
+const CusmtomAccordion = () => {
+  const {disciplinas, setDisciplinas} = disciplinasContext();
 
-  const [disciplinasState, setDisciplinaState] =
-    useState<IDisciplina[]>(listaDisciplinas);
+  const [isEditing, setIsEditing] = useState(false);
+  const toggleIsEditing = () => setIsEditing(!isEditing);
+  // const editableIndex = [{}];
+  // const [value, setValue] = useState("");
 
   const handleDelete = (id: string) => {
-    const disciplinas = disciplinasState.filter((disciplina) => disciplina.id !== id);
-    setDisciplinaState(disciplinas);
+    const discip = disciplinas.filter((disciplina) => disciplina.id !== id);
+    setDisciplinas(discip);
   };
 
   return (
     <div style={{ marginTop: '10px' }}>
-      {disciplinasState.map((dis, i) => {
+      {disciplinas.map((dis, i) => {
         return (
           <Accordion key={i}>
             <AccordionSummary
@@ -32,36 +35,80 @@ const CusmtomAccordion = (disciplinas: any) => {
             >
               <Grid container>
                 <Grid item xs={10.5}>
-                  <Typography variant='h6'>{`${dis.nome} - ${dis.creditos} créditos`}</Typography>
+                  {
+                    isEditing && <>
+                      <TextField id="campo-nome" label="Nome" variant="standard" sx={{ paddingRight: "20px" }} />
+                      <TextField id="campo-creditos" label="Créditos" variant="standard" />
+                    </>
+                  }
+                  {
+                    !isEditing && <Typography variant='h6'>{`${dis.nome} - ${dis.creditos} créditos`}</Typography>
+                  }
                 </Grid>
                 <Grid item xs={1.5}>
-                  <IconButton onClick={() => alert('Edit Me!')}>
+                  <IconButton onClick={() => toggleIsEditing()}>
                     <EditIcon />
                   </IconButton>
                   <IconButton onClick={() => handleDelete(dis.id)}>
                     <DeleteIcon color='warning' />
                   </IconButton>
                 </Grid>
-                <Grid item xs={10}>
-                  <b>Programa da Disciplina:</b>
-                  <Typography variant='subtitle1'>{dis.programa}</Typography>
-                  <b>Itens Bibliográficos:</b>
-                  {dis.itensBlibliograficos.map((item, i) => {
-                    return <div key={i}>{`- ${item}`}</div>;
-                  })}
+                <Grid item xs={12}>
+                  {
+                    isEditing && <TextField id="campo-programa" label="Programa da Disciplina" variant="standard" />
+                  }
+                  {
+                    !isEditing && <>
+                      <b>Programa da Disciplina:</b>
+                      <br />
+                      <Typography variant='subtitle1'>{dis.programa}</Typography>
+                    </>
+                  }
+                </Grid>
+                <Grid item xs={12}>
+                  {
+                    isEditing && dis.itensBlibliograficos.map((item, i) => {
+                      return <>
+                        <br/>
+                        <TextField id="campo-biblio" label="Itens Bibliográficos" variant="standard" />
+                      </>
+                    })
+                  }
+                  {
+                    !isEditing && <>
+                      <b>Itens Bibliográficos:</b>
+                      <br />
+                      {dis.itensBlibliograficos.map((item, i) => {
+                        return <div key={i}>{`- ${item}`}</div>;
+                      })}
+                    </>
+                  }
                 </Grid>
                 <Grid item xs={2} />
               </Grid>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                <b>CodCred:</b> {dis.curriculo.idCurriculo}
-                <br />
-                <b>Curso:</b> {dis.curriculo.nomeCurso}
-                <br />
-                <b>Período:</b> {dis.curriculo.dataInicioVigencia} -{' '}
-                {dis.curriculo.dataFimVigencia}
-              </Typography>
+              {
+                isEditing && <>
+                  <TextField id="campo-codcred" label="CodCred" variant="standard" />
+                  <br />
+                  <TextField id="campo-curso" label="Curso" variant="standard" />
+                  <br />
+                  <TextField id="campo-periodo" label="Período" variant="standard" />
+                </>
+              }
+              {
+                !isEditing && <>
+                  <Typography>
+                    <b>CodCred:</b> {dis.curriculo.idCurriculo}
+                    <br />
+                    <b>Curso:</b> {dis.curriculo.nomeCurso}
+                    <br />
+                    <b>Período:</b> {dis.curriculo.dataInicioVigencia} -{' '}
+                    {dis.curriculo.dataFimVigencia}
+                  </Typography>
+                </>
+              }
             </AccordionDetails>
           </Accordion>
         );
