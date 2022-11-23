@@ -72,7 +72,14 @@ export default function Recursos() {
           })}
         </Grid>
       </Grid>
-      <SpeedDialCustom />
+      <SpeedDialCustom
+        onResourceCreation={() => {
+          alert('onResourceCreation');
+        }}
+        onResourceTypeCreation={() => {
+          alert('onResourceTypeCreation');
+        }}
+      />
     </>
   );
 }

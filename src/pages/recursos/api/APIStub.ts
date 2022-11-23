@@ -4,28 +4,8 @@ import APIInterface from './APIInterface';
 export default class APIStub implements APIInterface {
   constructor() {}
 
-  public async getAll(): Promise<Resource[]> {
-    return [
-      {
-        id: 1,
-        description: 'Recurso 1',
-        status: 'Disponible',
-        resourceType: {
-          id: 1,
-          name: 'Tipo 1',
-        },
-        details: [
-          {
-            id: 1,
-            name: 'Detail 1',
-          },
-        ],
-      },
-    ];
-  }
-
-  public async getOne(id: number): Promise<Resource | null> {
-    return {
+  private static exampleResources: Resource[] = [
+    {
       id: 1,
       description: 'Recurso 1',
       status: 'Disponible',
@@ -39,6 +19,28 @@ export default class APIStub implements APIInterface {
           name: 'Detail 1',
         },
       ],
-    };
+    },
+  ];
+
+  public async getAll(): Promise<Resource[]> {
+    return APIStub.exampleResources;
+  }
+
+  public async getOne(id: number): Promise<Resource | null> {
+    return (
+      APIStub.exampleResources.find((resource) => resource.id === id) || null
+    );
+  }
+
+  public async create(resource: Resource): Promise<Resource> {
+    APIStub.exampleResources.push(resource);
+    return resource;
+  }
+
+  public async delete(id: number): Promise<number> {
+    APIStub.exampleResources = APIStub.exampleResources.filter(
+      (resource) => resource.id !== id
+    );
+    return id;
   }
 }

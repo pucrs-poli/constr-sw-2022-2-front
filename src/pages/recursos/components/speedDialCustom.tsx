@@ -1,12 +1,19 @@
 import { SpeedDial, SpeedDialAction } from '@mui/material';
 
-const actions = [
-  { name: 'Adicionar um recurso' },
-  { name: 'Adicionar um novo tipo de recurso' },
-];
-const sla = 'Adicionar Tipo/Recurso';
+type SpeedDialCustomProps = {
+  onResourceCreation?: () => void;
+  onResourceTypeCreation?: () => void;
+};
 
-export default function SpeedDialCustom() {
+export default function SpeedDialCustom(props: SpeedDialCustomProps) {
+  const actions = [
+    { name: 'Adicionar um recurso', func: props.onResourceCreation },
+    {
+      name: 'Adicionar um novo tipo de recurso',
+      func: props.onResourceTypeCreation,
+    },
+  ];
+  const text = 'Adicionar Tipo/Recurso';
   return (
     <SpeedDial
       FabProps={{
@@ -17,7 +24,7 @@ export default function SpeedDialCustom() {
       }}
       sx={{ position: 'fixed', bottom: 16, right: 16 }}
       ariaLabel='SpeedDial basic example'
-      icon={sla}
+      icon={text}
     >
       {actions.map((action) => (
         <SpeedDialAction
@@ -30,6 +37,7 @@ export default function SpeedDialCustom() {
           key={action.name}
           icon={action.name}
           tooltipTitle={action.name}
+          onClick={action.func}
         />
       ))}
     </SpeedDial>

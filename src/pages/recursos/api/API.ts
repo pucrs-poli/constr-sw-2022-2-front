@@ -11,4 +11,12 @@ export default class API implements APIInterface {
   public async getOne(id: number): Promise<Resource | null> {
     return null;
   }
+
+  public async create(resource: Resource): Promise<Resource> {
+    return resource;
+  }
+
+  public async delete(id: number): Promise<number> {
+    return id;
+  }
 }
