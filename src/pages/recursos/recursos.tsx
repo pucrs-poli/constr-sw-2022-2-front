@@ -137,7 +137,7 @@ export default function Recursos() {
               <Card
                 style={{
                   cursor: 'pointer',
-                  padding: '10px',
+                  padding: '16px',
                 }}
                 onClick={() => {
                   setSelectedResource(rec);
@@ -159,16 +159,26 @@ export default function Recursos() {
                   <Grid item>
                     {/* Quando clica no botao ele ta pegando o card que esta atras */}
                     <IconButton
-                      onClick={() => {
-                        console.log('errado');
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        alert('Funcionalidade ainda não implementada.');
+                        getAllResourcesAndTypes();
                       }}
                     >
                       <EditIcon style={{ color: 'Grey', fontSize: 30 }} />
                     </IconButton>
                     <Button
-                      onClick={() => {
-                        console.log('errado2');
-                        resourcesServiceBack.delete(rec.id!);
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.confirm(
+                          'Tem certeza que deseja excluir o recurso?'
+                        ) &&
+                          resourcesService
+                            .delete(rec.id!)
+
+                            .then(() => {
+                              getAllResourcesAndTypes();
+                            });
                       }}
                     >
                       <DeleteIcon style={{ color: 'red', fontSize: 30 }} />
