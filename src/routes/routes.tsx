@@ -48,7 +48,7 @@ routes.push({
 });
 
 routes.push({
-  path: paths.predio,
+  path: [paths.predio, paths.editarPredio],
   component: Predio,
   exact: true,
 });

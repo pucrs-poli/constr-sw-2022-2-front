@@ -1,0 +1,28 @@
+@import './../../../../assets/styles/constants';
+$rootClassName: predio-item-component;
+
+:export {
+  rootClassName: $rootClassName;
+}
+
+.#{$rootClassName} {
+  background-color: white;
+  box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0.4);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .#{$rootClassName}-info {
+    display: flex;
+    flex-direction: column;
+    .#{$rootClassName}-rooms {
+      padding-top: 2px;
+      opacity: 0.3;
+    }
+  }
+  .#{$rootClassName}-actions {
+    display: flex;
+    gap: 2px;
+  }
+}

@@ -1,3 +1,4 @@
+import { AdminPermission } from 'libraries/permissions/admin';
 import { AlunoPermission } from 'libraries/permissions/aluno';
 import { CoordenadorPermission } from 'libraries/permissions/coordenador';
 import { ProfessorPermission } from 'libraries/permissions/professor';
@@ -16,6 +17,7 @@ export const userPermissionByGroup = (
   groups: GrupoUsuario[]
 ): Permission | undefined => {
   const permissions = [
+    AdminPermission,
     CoordenadorPermission,
     ProfessorPermission,
     AlunoPermission,

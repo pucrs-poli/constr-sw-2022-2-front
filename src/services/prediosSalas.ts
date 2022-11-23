@@ -1,7 +1,9 @@
 import { Predio } from 'models/prediosSalas';
 import { toRequest } from 'utils/request';
 import { api } from './api';
-import { getPrediosSalasEndpoint } from './endpoints';
+import { getEnvironment } from './environment';
+
+const getPrediosSalasEndpoint = () => `${getEnvironment()?.prediosSalas}`
 
 export const getAllPredios = () => {
   const url = `${getPrediosSalasEndpoint()}/building`;

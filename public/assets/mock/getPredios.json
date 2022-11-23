@@ -1,8 +1,32 @@
 [
   {
-    "_id": "enzo"
+    "_id": "predio01",
+    "name": "Prédio 32",
+    "number": 32,
+    "address": {
+      "street": "Rua 1",
+      "number": 21,
+      "complement": "portão vermelho",
+      "neighborhood": "Partenon",
+      "city": "Porto Alegre",
+      "state": "RS",
+      "zipCode": "90909000"
+    },
+    "classrooms": []
   },
   {
-    "_id": "Gustavo"
+    "_id": "predio02",
+    "name": "Prédio 15",
+    "number": 15,
+    "address": {
+      "street": "Rua 1",
+      "number": 20,
+      "complement": "portão vermelho",
+      "neighborhood": "Partenon",
+      "city": "Porto Alegre",
+      "state": "RS",
+      "zipCode": "90909000"
+    },
+    "classrooms": []
   }
 ]
