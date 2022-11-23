@@ -162,7 +162,6 @@ export default function Recursos() {
                       onClick={(e) => {
                         e.stopPropagation();
                         alert('Funcionalidade ainda não implementada.');
-                        getAllResourcesAndTypes();
                       }}
                     >
                       <EditIcon style={{ color: 'Grey', fontSize: 30 }} />
