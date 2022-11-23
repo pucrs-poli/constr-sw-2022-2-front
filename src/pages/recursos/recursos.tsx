@@ -39,15 +39,15 @@ export default function Recursos() {
             <Typography color='text.primary'>Recursos</Typography>
           </Breadcrumbs>
         </Grid>
-        <Grid
-          container
-          flexDirection='column'
-          // justifyContent={'space-between'}
-          gap={5}
-          padding={1}
-        >
+        <Grid container flexDirection='column' gap={5} padding={1}>
           <Grid container flexDirection='row'>
-            <h1>Recursos</h1>
+            <h1
+              style={{
+                marginBottom: 0,
+              }}
+            >
+              Recursos
+            </h1>
           </Grid>
           {resources.map((rec) => {
             return (
