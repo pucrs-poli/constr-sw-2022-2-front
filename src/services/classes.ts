@@ -23,10 +23,20 @@ export const deleteClass = (id: string) => {
   );
 };
 
-export const createClass = (classe:CreateClass) => {
+export const createClass = (classe: CreateClass) => {
   const url = `${getClassesEndpoint()}/classes`;
   return toRequest<Class>(
     api.post,
+    [url,classe], 
+    'classList',
+     false
+  );
+};
+
+export const updateClass = (classe: CreateClass) => {
+  const url = `${getClassesEndpoint()}/classes`;
+  return toRequest<Class>(
+    api.put,
     [url,classe], 
     'classList',
      false
