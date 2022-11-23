@@ -36,7 +36,7 @@ export default class API implements APIInterface {
     }
   }
 
-  public async create(resource: Resource[]): Promise<Resource | undefined> {
+  public async create(resource: Resource[]): Promise<boolean | undefined> {
     try {
       await axios.post(BASE_URL, resource, {
         headers: {
@@ -44,7 +44,7 @@ export default class API implements APIInterface {
           'Access-Control-Allow-Origin': '*',
         },
       });
-      return resource[0];
+      return true;
     } catch (error: any) {
       console.log(error);
     }
@@ -75,21 +75,20 @@ export default class API implements APIInterface {
       return [];
     }
   }
-  
+
   public async createTypeResource(
     resourceType: ResourceType
-  ): Promise<ResourceType | undefined> {
+  ): Promise<boolean | undefined> {
     try {
       await axios.post(`${BASE_URL}/type`, resourceType, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      return resourceType;
+      return true;
     } catch (error: any) {
       console.log(error);
       return undefined;
     }
   }
-
 }

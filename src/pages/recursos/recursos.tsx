@@ -44,22 +44,22 @@ export default function Recursos() {
     Using stub for mocks, chage APIStub to API when using real API.
   */
   const resourcesService = new ResourcesService(new APIStub());
-  const resourcesServiceBack = new ResourcesService(new API());
+  const resourcesServiceBack = new ResourcesService(new APIStub());
 
   const [resourcesList, setResourcesList] = useState<Resource[]>([]);
   const [resourceTypeList, setResourceTypeList] = useState<ResourceType[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
+  const getAllResourcesAndTypes = async () => {
+    // const response = await resourcesService.getAll();
+    // const responseType = await resourcesService.getAllTypes();
+    const response = await resourcesServiceBack.getAll();
+    const responseType = await resourcesServiceBack.getAllTypes();
+    setResourceTypeList(responseType);
+    setResourcesList(response);
+    setResources(response);
+  };
   useEffect(() => {
-    const getAllResources = async () => {
-      // const response = await resourcesService.getAll();
-      // const responseType = await resourcesService.getAllTypes();
-      const response = await resourcesServiceBack.getAll();
-      const responseType = await resourcesServiceBack.getAllTypes();
-      setResourceTypeList(responseType);
-      setResourcesList(response);
-      setResources(response);
-    };
-    getAllResources();
+    getAllResourcesAndTypes();
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -273,6 +273,8 @@ export default function Recursos() {
                 try {
                   resourcesServiceBack.create([newResource]);
                   setCreateModalOpen(false);
+                  getAllResourcesAndTypes();
+                  alert('Recurso criado com sucesso!');
                 } catch (error) {
                   alert('Erro ao criar recurso!');
                 }
@@ -312,6 +314,8 @@ export default function Recursos() {
                 try {
                   resourcesServiceBack.createTypeResource(newResourceType);
                   setCreateModal2Open(false);
+                  getAllResourcesAndTypes();
+                  alert('Tipo de recurso criado com sucesso!');
                 } catch (error) {
                   alert('Erro ao criar tipo de recurso!');
                 }

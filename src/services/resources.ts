@@ -12,7 +12,7 @@ export default class ResourcesService {
     return await this.api.getOne(id);
   }
 
-  public async create(resource: Resource[]): Promise<Resource | undefined> {
+  public async create(resource: Resource[]): Promise<boolean | undefined> {
     return await this.api.create(resource);
   }
 
@@ -26,7 +26,7 @@ export default class ResourcesService {
 
   public async createTypeResource(
     resourceType: ResourceType
-  ): Promise<ResourceType | undefined> {
+  ): Promise<boolean | undefined> {
     return await this.api.createTypeResource(resourceType);
   }
 }

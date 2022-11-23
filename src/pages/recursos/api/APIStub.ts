@@ -21,7 +21,7 @@ export default class APIStub implements APIInterface {
       ],
     },
     {
-      id: 1,
+      id: 2,
       description: 'Recurso 1',
       status: 'Disponible',
       resourceType: {
@@ -36,7 +36,7 @@ export default class APIStub implements APIInterface {
       ],
     },
     {
-      id: 1,
+      id: 3,
       description: 'Recurso 1',
       status: 'Disponible',
       resourceType: {
@@ -71,9 +71,12 @@ export default class APIStub implements APIInterface {
     return APIStub.exampleResources.find((resource) => resource.id === id);
   }
 
-  public async create(resource: Resource[]): Promise<Resource | undefined> {
-    APIStub.exampleResources.push(resource[0]);
-    return resource[0];
+  public async create(resource: Resource[]): Promise<boolean | undefined> {
+    for (const rec of resource) {
+      rec.id = APIStub.exampleResources.length + 1;
+      APIStub.exampleResources.push(rec);
+    }
+    return true;
   }
 
   public async delete(id: number): Promise<number> {
@@ -89,9 +92,9 @@ export default class APIStub implements APIInterface {
 
   public async createTypeResource(
     resourceType: ResourceType
-  ): Promise<ResourceType | undefined> {
+  ): Promise<boolean | undefined> {
+    resourceType.id = APIStub.exampleResourcesTypes.length + 1;
     APIStub.exampleResourcesTypes.push(resourceType);
-    return resourceType;
+    return true;
   }
-
 }
