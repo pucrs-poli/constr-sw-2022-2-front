@@ -15,7 +15,7 @@ import { paths } from 'routes/routes';
 import ResourcesService from 'services/resources';
 import APIStub from './api/APIStub';
 import { useEffect, useState } from 'react';
-import { Resource } from 'models/resource';
+import { Resource, ResourceType } from 'models/resource';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -53,6 +53,10 @@ export default function Recursos() {
   const [description, setDescription] = useState('');
   const [resourceType, setResourceType] = useState('');
   const [status, setStatus] = useState('');
+
+  const [createModal2Open, setCreateModal2Open] = useState(false);
+
+  const [name, setName] = useState('');
 
   const history = useHistory();
   return (
@@ -107,7 +111,7 @@ export default function Recursos() {
           setCreateModalOpen(true);
         }}
         onResourceTypeCreation={() => {
-          alert('onResourceTypeCreation');
+          setCreateModal2Open(true);
         }}
       />
       <Modal
@@ -181,6 +185,45 @@ export default function Recursos() {
                   setCreateModalOpen(false);
                 } catch (error) {
                   alert('Erro ao criar recurso!');
+                }
+              }}
+            >
+              Criar
+            </Button>
+          </>
+        </Box>
+      </Modal>
+      <Modal
+        open={createModal2Open}
+        onClose={() => {
+          setCreateModal2Open(false);
+        }}
+      >
+        <Box sx={style}>
+          <>
+            <Typography id='modal-modal-title' variant='h6' component='h2'>
+              Criar Tipo de Recurso
+            </Typography>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Nome'
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            ></TextField>
+            <Button
+              style={{ marginTop: '30px', width: '100%' }}
+              variant='contained'
+              onClick={() => {
+                const newResourceType: ResourceType = {
+                  name: description,
+                };
+                try {
+                  // resourcesService.createResourceType(newResourceType);
+                  setCreateModal2Open(false);
+                } catch (error) {
+                  alert('Erro ao criar tipo de recurso!');
                 }
               }}
             >
