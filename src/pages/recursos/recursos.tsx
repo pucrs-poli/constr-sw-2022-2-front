@@ -385,6 +385,17 @@ export default function Recursos() {
             >
               Pesquisar
             </Button>
+            <Button
+              style={{ marginTop: '30px', width: '100%' }}
+              variant='contained'
+              color='secondary'
+              onClick={() => {
+                setFilterModalOpen(false);
+                getAllResourcesAndTypes();
+              }}
+            >
+              Resetar Filtros
+            </Button>
           </>
         </Box>
       </Modal>
