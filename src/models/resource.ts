@@ -1,6 +1,6 @@
 
 export type Resource = {
-    id: number;
+    id: string;
     name: string;
 }
 

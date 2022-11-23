@@ -2,28 +2,33 @@ import { Reservation } from "./reservation";
 import { Resource, ResourceReference } from "./resource";
 
 export type Class = {
-    id: number;
+    id: string;
     room?: {
-        id: number;
+        id: string;
         numRoom?: number;
     },
     group: {
-        id: number;
+        id: string;
         numGroup?: number;
         subject?: {
-            id: number;
+            id: string;
             name?: string;
         }
     },
     reservations: Reservation[];
     date: Date;
-    content: string;
+    content: string;   
     call: ClassCall[];
 }
 
-export type CreateClass = Omit<Class, 'reservations'> & {
-    resources: ResourceReference[];
+export type CreateClass = Omit<Class, 'reservations'|'call'> & {
+    roomId: string
+    groupId: string
+    resourcesReservations: ResourceReference[];
 };
+
+
+
 
 export type ClassCall = {
     call?: Call;

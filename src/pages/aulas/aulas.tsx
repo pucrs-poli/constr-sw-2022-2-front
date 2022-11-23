@@ -9,21 +9,22 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import AddIcon from '@mui/icons-material/Add';
 
-import { getClasses } from 'services/classes';
+import { createClass, deleteClass, getClasses } from 'services/classes';
 import { Class, CreateClass } from 'models/class';
 
 export default function Aulas() {
   const [classes, setClasses] = useState<Class[]>();
   const [searchKey, setSearchKey] = useState<string>("");
-  const [createClass, setCreateClass] = useState<boolean>(false);
+  const [isCreatingClass, setIsCreatingClass] = useState<boolean>(false);
   const [editClass, setEditClass] = useState<CreateClass>();
-  const [excludeClassId, setExcludeClassId] = useState<number>();
+  const [excludeClassId, setExcludeClassId] = useState<string>();
 
   const history = useHistory();
 
 
   useEffect(() => {
     getClasses().then(response => response.data).then(setClasses);
+    
   }, [])
 
   const style = {
@@ -39,13 +40,33 @@ export default function Aulas() {
     px: 4,
   };
 
-  const postClass = async () => { }
+  const onCreateClass = async () => { 
+    await createClass({      
+      roomId: '0',
+      groupId: '0',
+      date: new Date(),
+      content: "string",
+      resourcesReservations: [
+      {
+        id: '0'     
+
+      }]
+    } as CreateClass)
+    closeModal()
+    getClasses().then(response => response.data).then(setClasses)
+    
+  }
   const patchClass = async () => { }
-  const deleteClass = async () => { }
+  const onDeleteClass = async () => { 
+    await deleteClass(excludeClassId!)
+    closeModal()
+    getClasses().then(response => response.data).then(setClasses)
+
+   }
 
 
   const closeModal = () => {
-    setCreateClass(false)
+    setIsCreatingClass(false)
     setEditClass(undefined)
     setExcludeClassId(undefined)
   }
@@ -98,7 +119,7 @@ export default function Aulas() {
 
         <Box sx={{ m: 2 }} />
         <Modal
-          open={createClass || !!editClass || !!excludeClassId}
+          open={isCreatingClass || !!editClass || !!excludeClassId}
           onClose={closeModal}
           aria-labelledby="child-modal-title"
           aria-describedby="child-modal-description"
@@ -120,7 +141,7 @@ export default function Aulas() {
                 <Box m={16} />
                 <Grid container justifyContent={"end"}>
                   <Button onClick={closeModal}>Cancelar</Button>
-                  <Button style={{ color: "#B00020" }} onClick={async () => await deleteClass()}>Deletar</Button>
+                  <Button style={{ color: "#B00020" }} onClick={async () => await onDeleteClass()}>Deletar</Button>
                 </Grid>
               </>
               :
@@ -130,20 +151,20 @@ export default function Aulas() {
                   <Typography fontWeight={600} fontSize={34}>  Aulas</Typography>
                 </div>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  {createClass ? "Cadastrar " : "Editar "}  aula
+                  {isCreatingClass ? "Cadastrar " : "Editar "}  aula
                 </Typography>
                 <TextField label="Disciplina" fullWidth value={editClass?.group?.subject?.name} onChange={(e) => {/* Filer options on groups textfield */}} />
                 <Box m={2} />
-                <TextField label="Número da Turma" fullWidth value={editClass?.group?.numGroup} onChange={(e) => setEditClass({ ...editClass!, group: { id: parseInt(e.target.value) } })} />
+                <TextField label="Número da Turma" fullWidth value={editClass?.group?.numGroup} onChange={(e) => setEditClass({ ...editClass!, group: { id: e.target.value } })} />
                 <Box m={2} />
                 <InputLabel id="reservation-select-label">Reserva</InputLabel>
                 <Select
                   id="reservation-select"
                   labelId='reservation-select-label'
-                  value={editClass?.resources[0].id}
+                  value={editClass?.resourcesReservations?.[0]?.id}
                   label="Reserva"
                   fullWidth
-                  onChange={(e) => setEditClass({ ...editClass!, resources: [{ id: e.target.value as number }]})}
+                  onChange={(e) => setEditClass({ ...editClass!, resourcesReservations: [{ id: e.target.value }]})}
                 >
                   <MenuItem value={10}>Note Positivo</MenuItem>
                   <MenuItem value={20}>Mouse Multilaser</MenuItem>
@@ -151,8 +172,8 @@ export default function Aulas() {
                 </Select>
                 <Box m={16} />
                 <Grid container justifyContent={"end"}>
-                  <Button onClick={() => setCreateClass(false)}>Cancelar</Button>
-                  {createClass ? <Button onClick={async () => await postClass()}>Criar</Button> : <Button onClick={async () => await patchClass()}>Criar</Button>}
+                  <Button onClick={() => setIsCreatingClass(false)}>Cancelar</Button>
+                  {isCreatingClass ? <Button onClick={async () => await onCreateClass()}>Criar</Button> : <Button onClick={async () => await patchClass()}>Criar</Button>}
                 </Grid>
               </>
             }
@@ -160,10 +181,10 @@ export default function Aulas() {
         </Modal>
 
         <Grid>
-          {classes?.map((it) => {
+          {classes?.map((it,i) => {
             return (
               <>
-                <Card sx={{ minWidth: 275 }}>
+                <Card key={i} sx={{ minWidth: 275 }}>
                   <CardContent >
                     <Grid container
                       direction="row"
@@ -174,7 +195,7 @@ export default function Aulas() {
                         {it.group.subject?.name}
                       </Typography>
                       <Grid>
-                        <IconButton onClick={() => { setEditClass({ ...it, resources: it.reservations.map(x => x.resource) }) }}>
+                        <IconButton onClick={() => { setEditClass({ ...it, resourcesReservations: it.reservations.map(x => x.resource), roomId:it.room!.id, groupId:it.group.id}) }}>
                           <CreateRoundedIcon />
                         </IconButton >
                         <IconButton onClick={() => { setExcludeClassId(it.id) }}>
@@ -197,7 +218,7 @@ export default function Aulas() {
         </Grid>
       </Grid>
       <Grid position={"absolute"} left={"85%"} top={"90%"}>
-        <Button onClick={() => { setCreateClass(true) }} style={{ position: "fixed", background: "#108BB1", color: "#F1F1F1", height: "5%", width: "10%", borderRadius: "20px" }}> <AddIcon /> CRIAR</Button>
+        <Button onClick={() => { setIsCreatingClass(true) }} style={{ position: "fixed", background: "#108BB1", color: "#F1F1F1", height: "5%", width: "10%", borderRadius: "20px" }}> <AddIcon /> CRIAR</Button>
       </Grid>
     </Grid>
   );
