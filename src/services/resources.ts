@@ -8,7 +8,7 @@ export default class ResourcesService {
     return await this.api.getAll();
   }
 
-  public async getOne(id: number): Promise<Resource | null> {
+  public async getOne(id: number): Promise<Resource | undefined> {
     return await this.api.getOne(id);
   }
 
@@ -20,7 +20,9 @@ export default class ResourcesService {
     return await this.api.delete(id);
   }
 
-  public async createTypeResource(resourceType: ResourceType): Promise<ResourceType | undefined> {
+  public async createTypeResource(
+    resourceType: ResourceType
+  ): Promise<ResourceType | undefined> {
     return await this.api.createTypeResource(resourceType);
   }
 }

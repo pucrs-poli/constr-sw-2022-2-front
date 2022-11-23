@@ -27,17 +27,14 @@ export default class APIStub implements APIInterface {
       id: 1,
       name: 'Tipo 1',
     },
-  ]
-
+  ];
 
   public async getAll(): Promise<Resource[]> {
     return APIStub.exampleResources;
   }
 
-  public async getOne(id: number): Promise<Resource | null> {
-    return (
-      APIStub.exampleResources.find((resource) => resource.id === id) || null
-    );
+  public async getOne(id: number): Promise<Resource | undefined> {
+    return APIStub.exampleResources.find((resource) => resource.id === id);
   }
 
   public async create(resource: Resource[]): Promise<Resource | undefined> {
@@ -52,9 +49,10 @@ export default class APIStub implements APIInterface {
     return id;
   }
 
-  public async createTypeResource(resourceType: ResourceType): Promise<ResourceType | undefined> {
+  public async createTypeResource(
+    resourceType: ResourceType
+  ): Promise<ResourceType | undefined> {
     APIStub.exampleResourcesTypes.push(resourceType);
     return resourceType;
   }
-
 }
