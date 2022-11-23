@@ -5,6 +5,7 @@ export default interface APIInterface {
   getOne(id: number): Promise<Resource | undefined>;
   create(resource: Resource[]): Promise<Resource | undefined>;
   delete(id: number): Promise<number>;
+  getAllTypes(): Promise<ResourceType[]>;
   createTypeResource(
     resourceType: ResourceType
   ): Promise<ResourceType | undefined>;

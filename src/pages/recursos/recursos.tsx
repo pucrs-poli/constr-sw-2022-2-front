@@ -47,11 +47,15 @@ export default function Recursos() {
   const resourcesServiceBack = new ResourcesService(new API());
 
   const [resourcesList, setResourcesList] = useState<Resource[]>([]);
+  const [resourceTypeList, setResourceTypeList] = useState<ResourceType[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
   useEffect(() => {
     const getAllResources = async () => {
-      const response = await resourcesService.getAll();
-      // const response = await resourcesServiceBack.getAll();
+      // const response = await resourcesService.getAll();
+      // const responseType = await resourcesService.getAllTypes();
+      const response = await resourcesServiceBack.getAll();
+      const responseType = await resourcesServiceBack.getAllTypes();
+      setResourceTypeList(responseType);
       setResourcesList(response);
       setResources(response);
     };
@@ -66,8 +70,8 @@ export default function Recursos() {
 
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
-  const [resourceTypeId, setResourceTypeId] = useState('');
-  const [resourceType, setResourceType] = useState('');
+  // const [resourceTypeId, setResourceTypeId] = useState('');
+  // const [resourceType, setResourceType] = useState('');
 
   const [createModal2Open, setCreateModal2Open] = useState(false);
 
@@ -75,14 +79,15 @@ export default function Recursos() {
 
   const [name, setName] = useState('');
 
-  const [filterName, setFilterName] = useState('');
-  const handleChange = (event: SelectChangeEvent) => {
-    setFilterName(event.target.value as string);
+  const [filterNameCreate, setFilterNameCreate] = useState<any>('');
+  const handleChangeCreate = (event: SelectChangeEvent) => {
+    setFilterNameCreate(event.target.value as string);
   };
 
-  const resourceTypesNames = Array.from(
-    new Set(resourcesList.map((rec) => rec.resourceType.name))
-  );
+  const [filterName, setFilterName] = useState<any>('');
+  const handleChange = (event: SelectChangeEvent) => {
+    setFilterName(event.target.value as String);
+  };
 
   const history = useHistory();
   return (
@@ -230,32 +235,39 @@ export default function Recursos() {
                 setStatus(e.target.value);
               }}
             ></TextField>
-            <TextField
-              style={{ marginTop: '30px', width: '100%' }}
-              label='Id do Tipo de Recurso'
-              value={resourceTypeId}
-              onChange={(e) => {
-                setResourceTypeId(e.target.value);
-              }}
-            ></TextField>
-            <TextField
-              style={{ marginTop: '30px', width: '100%' }}
-              label='Tipo do Recurso'
-              value={resourceType}
-              onChange={(e) => {
-                setResourceType(e.target.value);
-              }}
-            ></TextField>
+            <InputLabel
+              style={{ marginTop: '10px' }}
+              id='demo-simple-select-label'
+              size='normal'
+            >
+              Tipo
+            </InputLabel>
+            <Select
+              style={{ width: '100%' }}
+              autoWidth={true}
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={filterNameCreate}
+              label='Tipo'
+              onChange={handleChangeCreate}
+            >
+              {resourceTypeList.map((rec) => {
+                return <MenuItem value={rec.id}>{rec.name}</MenuItem>;
+              })}
+            </Select>
             <Button
               style={{ marginTop: '30px', width: '100%' }}
               variant='contained'
               onClick={() => {
+                const typeSelected = resourceTypeList.find(
+                  (data) => data.id === filterNameCreate
+                );
                 const newResource: Resource = {
                   description,
                   status,
                   resourceType: {
-                    id: Number(resourceTypeId),
-                    name: resourceType,
+                    id: typeSelected?.id,
+                    name: typeSelected!.name,
                   },
                 };
                 try {
@@ -295,10 +307,10 @@ export default function Recursos() {
               variant='contained'
               onClick={() => {
                 const newResourceType: ResourceType = {
-                  name: description,
+                  name: name,
                 };
                 try {
-                  // resourcesService.createResourceType(newResourceType);
+                  resourcesServiceBack.createTypeResource(newResourceType);
                   setCreateModal2Open(false);
                 } catch (error) {
                   alert('Erro ao criar tipo de recurso!');
@@ -337,8 +349,8 @@ export default function Recursos() {
               label='Tipo'
               onChange={handleChange}
             >
-              {resourceTypesNames.map((rec) => {
-                return <MenuItem value={rec}>{rec}</MenuItem>;
+              {resourceTypeList.map((rec) => {
+                return <MenuItem value={rec.id}>{rec.name}</MenuItem>;
               })}
             </Select>
             <Button
@@ -349,7 +361,7 @@ export default function Recursos() {
                   console.log(filterName);
                   setResources(
                     resourcesList.filter((element) => {
-                      return element.resourceType.name === filterName;
+                      return element.resourceType.id === filterName;
                     })
                   );
                   setFilterModalOpen(false);

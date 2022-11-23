@@ -20,6 +20,10 @@ export default class ResourcesService {
     return await this.api.delete(id);
   }
 
+  public async getAllTypes(): Promise<ResourceType[]> {
+    return await this.api.getAllTypes();
+  }
+
   public async createTypeResource(
     resourceType: ResourceType
   ): Promise<ResourceType | undefined> {

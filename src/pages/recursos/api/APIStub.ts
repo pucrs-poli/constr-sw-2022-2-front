@@ -20,12 +20,46 @@ export default class APIStub implements APIInterface {
         },
       ],
     },
+    {
+      id: 1,
+      description: 'Recurso 1',
+      status: 'Disponible',
+      resourceType: {
+        id: 1,
+        name: 'Tipo 1',
+      },
+      details: [
+        {
+          id: 1,
+          name: 'Detail 1',
+        },
+      ],
+    },
+    {
+      id: 1,
+      description: 'Recurso 1',
+      status: 'Disponible',
+      resourceType: {
+        id: 2,
+        name: 'Tipo 2',
+      },
+      details: [
+        {
+          id: 1,
+          name: 'Detail 1',
+        },
+      ],
+    },
   ];
 
   private static exampleResourcesTypes: ResourceType[] = [
     {
       id: 1,
       name: 'Tipo 1',
+    },
+    {
+      id: 2,
+      name: 'Tipo 2',
     },
   ];
 
@@ -49,10 +83,15 @@ export default class APIStub implements APIInterface {
     return id;
   }
 
+  public async getAllTypes(): Promise<ResourceType[]> {
+    return APIStub.exampleResourcesTypes;
+  }
+
   public async createTypeResource(
     resourceType: ResourceType
   ): Promise<ResourceType | undefined> {
     APIStub.exampleResourcesTypes.push(resourceType);
     return resourceType;
   }
+
 }

@@ -60,6 +60,22 @@ export default class API implements APIInterface {
     }
   }
 
+  public async getAllTypes(): Promise<ResourceType[]> {
+    try {
+      const response = await axios.get(`${BASE_URL}/type`);
+      const resourcesTypes: ResourceType[] = response.data.map((type: any) => {
+        return {
+          id: type.id,
+          name: type.name,
+        };
+      });
+      return resourcesTypes;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+  
   public async createTypeResource(
     resourceType: ResourceType
   ): Promise<ResourceType | undefined> {
@@ -75,4 +91,5 @@ export default class API implements APIInterface {
       return undefined;
     }
   }
+
 }
