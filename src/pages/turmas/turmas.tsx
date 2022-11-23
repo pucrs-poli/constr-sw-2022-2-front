@@ -2,7 +2,7 @@ import { Breadcrumbs, Grid, Link, Typography, Container } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 import { paths } from 'routes/routes';
-import CusmtomAccordion from './components/customAccordion';
+import CustomAccordion from './components/customAccordion';
 import SearchHeader from './components/searchHeader';
 
 export default function Turmas() {
@@ -27,7 +27,7 @@ export default function Turmas() {
       <Grid item xs={12}>
         <Container maxWidth='md' sx={{ backgroundColor: '#f5f5f5', paddingTop: "20px", paddingBottom: "20px", borderRadius: "1%"}}>
           <SearchHeader />
-          <CusmtomAccordion />
+          <CustomAccordion />
         </Container>
       </Grid>
     </Grid>
