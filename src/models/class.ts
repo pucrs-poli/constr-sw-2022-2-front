@@ -6,7 +6,6 @@ export type Class = {
     room?: {
         id: number;
         numRoom?: number;
-        name?: string;
     },
     group: {
         id: number;

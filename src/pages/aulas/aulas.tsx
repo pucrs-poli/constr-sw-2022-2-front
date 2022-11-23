@@ -120,7 +120,7 @@ export default function Aulas() {
                 <Box m={16} />
                 <Grid container justifyContent={"end"}>
                   <Button onClick={closeModal}>Cancelar</Button>
-                  <Button style={{ color: "#B00020" }} onClick={async () => await deleteClass()}>Criar</Button>
+                  <Button style={{ color: "#B00020" }} onClick={async () => await deleteClass()}>Deletar</Button>
                 </Grid>
               </>
               :

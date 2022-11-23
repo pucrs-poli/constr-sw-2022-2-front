@@ -8,7 +8,6 @@ export const getClasses = () => {
   return toRequest<Class[]>(
     api.get,
     [url],
-    'classes',
-    false
+    'classList'
   );
 };

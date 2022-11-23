@@ -1,0 +1,70 @@
+[
+  {
+    "id": 1,
+    "room": {
+      "id": 1,
+      "numRoom": 137
+    },
+    "group": {
+      "id": 1,
+      "numGroup": 31,
+      "subject": {
+        "id": 1,
+        "name": "Construção de Software"
+      }
+    },
+    "reservations": [
+      {
+        "id": 1,
+        "resource": {
+          "id": 1,
+          "name": "Notebook 1"
+        }
+      },
+      {
+        "id": 2,
+        "resource": {
+          "id": 2,
+          "name": "Notebook 2"
+        }
+      }
+    ],
+    "date": "2022-11-10T20:00:00.000Z",
+    "content": "",
+    "call": []
+  },
+  {
+    "id": 2,
+    "room": {
+      "id": 2,
+      "numRoom": 127
+    },
+    "group": {
+      "id": 2,
+      "numGroup": 32,
+      "subject": {
+        "id": 2,
+        "name": "Introdução a ES"
+      }
+    },
+    "reservations": [
+      {
+        "id": 3,
+        "resource": {
+          "id": 3,
+          "name": "Caixa de som"
+        }
+      },
+      {
+        "id": 4,
+        "resource": {
+          "id": 4,
+          "name": "Notebook 3"
+        }
+      }
+    ],
+    "date": "2022-11-10T21:00:00.000Z",
+    "content": "",
+    "call": []
+  }
+]
