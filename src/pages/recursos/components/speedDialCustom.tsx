@@ -15,7 +15,7 @@ export default function SpeedDialCustom() {
           height: 50,
         },
       }}
-      sx={{ position: 'absolute', bottom: 16, right: 16 }}
+      sx={{ position: 'fixed', bottom: 16, right: 16 }}
       ariaLabel='SpeedDial basic example'
       icon={sla}
     >

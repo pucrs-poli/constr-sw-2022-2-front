@@ -52,8 +52,13 @@ export default function Recursos() {
           </Grid>
           {resources.map((rec) => {
             return (
-              <Card>
-                <h3>{rec.name}</h3>
+              <Card
+                style={{
+                  cursor: 'pointer',
+                  padding: '10px',
+                }}
+              >
+                <h3>{rec.description}</h3>
               </Card>
             );
           })}
