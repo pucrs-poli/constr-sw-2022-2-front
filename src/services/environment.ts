@@ -5,6 +5,8 @@ interface Environment {
   isOffline: boolean;
   auth: string;
   classes: string;
+  groups: string;
+  subjects: string;
 }
 
 let loadedEnvironment: Environment;

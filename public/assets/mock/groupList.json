@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        "numGroup": 31,
+        "subject": {
+            "id": "1",
+            "name": "Construção de Software"
+        }
+    },
+    {
+        "id": "2",
+        "numGroup": 32,
+        "subject": {
+            "id": "1",
+            "name": "Construção de Software"
+        }
+    },
+    {
+        "id": "3",
+        "numGroup": 33,
+        "subject": {
+            "id": "1",
+            "name": "Construção de Software"
+        }
+    }
+]

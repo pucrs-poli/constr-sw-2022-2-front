@@ -26,7 +26,7 @@ export default function Login() {
         marginTop={3}
         marginBottom={3}
       >
-        <Logo width='90%' />
+        <Logo width='300' />
       </Grid>
       <form
         onSubmit={(e) => {

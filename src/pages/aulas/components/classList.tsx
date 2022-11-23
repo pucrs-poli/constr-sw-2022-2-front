@@ -16,8 +16,8 @@ export default function ClassList({ classes, onEditClick, onDeleteClick }: Class
         <Typography>Nenhuma aula encontrada.</Typography>
       ) : (
         classes.map((it, i) => (
-          <>
-            <Card key={i} sx={{ minWidth: 275 }}>
+          <div key={i}>
+            <Card sx={{ minWidth: 275 }}>
               <CardContent >
                 <Grid container
                   direction="row"
@@ -45,7 +45,7 @@ export default function ClassList({ classes, onEditClick, onDeleteClick }: Class
               </CardContent>
             </Card>
             <Box sx={{ m: 2 }} />
-          </>
+          </div>
         ))
       )}
     </Grid>

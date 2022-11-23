@@ -1,8 +1,13 @@
-import { Grid, Typography, TextField, Button, Modal, Select, MenuItem, InputLabel } from '@mui/material';
+import { Grid, Typography, TextField, Button, Modal, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { Box } from '@mui/system';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import { CreateClass } from 'models/class';
 import { classPageModalStyle } from './modalStyle';
+import { useEffect, useState } from 'react';
+import { Group } from 'models/group';
+import { Subject } from 'models/subject';
+import { getSubjects } from 'services/subjects';
+import { getGroupsBySubject } from 'services/groups';
 
 export interface ClassPageModalProps {
   isCreating: boolean;
@@ -15,6 +20,21 @@ export interface ClassPageModalProps {
 }
 
 export default function ClassPageEditModal({ isCreating, open, editClass, onClose, onChange, onCreateRequest, onUpdateRequest }: ClassPageModalProps) {
+  const [subjectId, setSubjectId] = useState<string>();
+  const [subjects, setSubjects] = useState<Subject[]>()
+  const [groups, setGroups] = useState<Group[]>();
+
+  const loadSubjects = () => getSubjects().then(res => res.data).then(setSubjects);
+  const loadGroups = () => subjectId !== undefined && getGroupsBySubject(subjectId).then(res => res.data).then(setGroups);
+
+  useEffect(() => {
+    loadSubjects();
+  }, []);
+
+  useEffect(() => {
+    loadGroups();
+  }, [subjectId]);
+
   return (
     <Modal
       open={open}
@@ -30,25 +50,60 @@ export default function ClassPageEditModal({ isCreating, open, editClass, onClos
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {isCreating ? "Cadastrar " : "Editar "}  aula
         </Typography>
-        <TextField label="Disciplina" fullWidth value={editClass?.group?.subject?.name} onChange={(e) => {/* Filer options on groups textfield */ }} />
+        <FormControl fullWidth>
+          <InputLabel id="subject-select-label">Disciplina</InputLabel>
+          <Select
+            id="subject-select"
+            labelId='subject-select-label'
+            value={subjectId}
+            label="Disciplina"
+            fullWidth
+            onChange={(e) => setSubjectId(e.target.value) }
+          >
+            {
+              subjects?.map((subject, i) => (
+                <MenuItem value={subject.id} key={i}>{subject.name}</MenuItem>
+              ))
+            }
+          </Select>
+        </FormControl>
         <Box m={2} />
-        <TextField label="Número da Turma" fullWidth value={editClass?.group?.numGroup} onChange={(e) => onChange?.({ ...editClass!, group: { id: e.target.value } })} />
+        <FormControl fullWidth>
+          <InputLabel id="group-select-label">Número da Turma</InputLabel>
+          <Select
+            disabled={subjectId === undefined}
+            id="group-select"
+            labelId='group-select-label'
+            value={editClass?.groupId}
+            label="Número da Turma"
+            fullWidth
+            onChange={(e) => onChange?.({ ...editClass!, groupId: e.target.value })}
+          >
+            {
+              groups?.map((group, i) => (
+                <MenuItem value={group.id} key={i}>{group.numGroup}</MenuItem>
+              ))
+            }
+          </Select>
+        </FormControl>
         <Box m={2} />
-        <InputLabel id="reservation-select-label">Reserva</InputLabel>
-        <Select
-          id="reservation-select"
-          labelId='reservation-select-label'
-          value={editClass?.resourcesReservations?.[0]?.id}
-          label="Reserva"
-          fullWidth
-          onChange={(e) => onChange?.({ ...editClass!, resourcesReservations: [{ id: e.target.value }] })}
-        >
-          <MenuItem value={10}>Notebook 1</MenuItem>
-          <MenuItem value={20}>Notebook 2</MenuItem>
-          <MenuItem value={30}>Mouse</MenuItem>
-        </Select>
-        <Box m={16} />
-        <Grid container justifyContent={"end"}>
+        <FormControl fullWidth>
+          <InputLabel id="reservation-select-label">Reserva</InputLabel>
+          <Select
+            id="reservation-select"
+            labelId='reservation-select-label'
+            value={editClass?.resourcesReservations?.[0]?.id}
+            label="Reserva"
+            fullWidth
+            onChange={(e) => onChange?.({ ...editClass!, resourcesReservations: [{ id: e.target.value }] })}
+          >
+            <MenuItem value={10}>Notebook 1</MenuItem>
+            <MenuItem value={20}>Notebook 2</MenuItem>
+            <MenuItem value={30}>Mouse</MenuItem>
+          </Select>
+        </FormControl>
+        <Box m={2} />
+        <Grid container justifyContent={"flex-end"}>
           <Button onClick={() => onClose?.()}>Cancelar</Button>
           {isCreating && <Button onClick={() => onCreateRequest?.()}>Criar</Button>}
           {!isCreating && <Button onClick={() => onUpdateRequest?.()}>Atualizar</Button>}
