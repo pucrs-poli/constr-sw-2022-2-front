@@ -1,17 +1,17 @@
 export type Detail = {
-  id: number;
+  id?: number;
   name: string;
 };
 
 export type ResourceType = {
-  id: number;
+  id?: number;
   name: string;
 };
 
 export type Resource = {
-  id: number;
+  id?: number;
   description: string;
   status: string;
   resourceType: ResourceType;
-  details: Detail[];
+  details?: Detail[];
 };

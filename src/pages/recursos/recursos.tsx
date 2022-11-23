@@ -6,6 +6,8 @@ import {
   Card,
   Modal,
   Box,
+  TextField,
+  Button,
 } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import SpeedDialCustom from './components/speedDialCustom';
@@ -32,6 +34,7 @@ export default function Recursos() {
     Using stub for mocks, chage APIStub to API when using real API.
   */
   const resourcesService = new ResourcesService(new APIStub());
+
   const [resources, setResources] = useState<Resource[]>([]);
   useEffect(() => {
     const getAllResources = async () => {
@@ -40,8 +43,17 @@ export default function Recursos() {
     };
     getAllResources();
   }, []);
+
   const [modalOpen, setModalOpen] = useState(false);
+
   const [selectedResource, setSelectedResource] = useState<Resource>();
+
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+
+  const [description, setDescription] = useState('');
+  const [resourceType, setResourceType] = useState('');
+  const [status, setStatus] = useState('');
+
   const history = useHistory();
   return (
     <>
@@ -92,7 +104,7 @@ export default function Recursos() {
       </Grid>
       <SpeedDialCustom
         onResourceCreation={() => {
-          alert('onResourceCreation');
+          setCreateModalOpen(true);
         }}
         onResourceTypeCreation={() => {
           alert('onResourceTypeCreation');
@@ -112,10 +124,69 @@ export default function Recursos() {
             <p>Tipo do Recurso: {selectedResource?.resourceType.name}</p>
             <p>Status: {selectedResource?.status}</p>
             <h4>Detalhes:</h4>
-            {selectedResource?.details.map((detail) => {
+            {selectedResource?.details?.map((detail) => {
               return <p>{detail.name}</p>;
             })}
           </Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={createModalOpen}
+        onClose={() => {
+          setCreateModalOpen(false);
+        }}
+      >
+        <Box sx={style}>
+          <>
+            <Typography id='modal-modal-title' variant='h6' component='h2'>
+              Criar Recurso
+            </Typography>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Descrição'
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+            ></TextField>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Tipo do Recurso'
+              value={resourceType}
+              onChange={(e) => {
+                setResourceType(e.target.value);
+              }}
+            ></TextField>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Status'
+              value={status}
+              onChange={(e) => {
+                setStatus(e.target.value);
+              }}
+            ></TextField>
+            <Button
+              style={{ marginTop: '30px', width: '100%' }}
+              variant='contained'
+              onClick={() => {
+                const newResource: Resource = {
+                  description,
+                  resourceType: {
+                    name: resourceType,
+                  },
+                  status,
+                };
+                try {
+                  resourcesService.create(newResource);
+                  setCreateModalOpen(false);
+                } catch (error) {
+                  alert('Erro ao criar recurso!');
+                }
+              }}
+            >
+              Criar
+            </Button>
+          </>
         </Box>
       </Modal>
     </>
