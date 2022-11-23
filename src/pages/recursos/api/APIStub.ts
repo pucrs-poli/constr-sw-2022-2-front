@@ -1,4 +1,4 @@
-import { Resource } from 'models/resource';
+import { Resource, ResourceType } from 'models/resource';
 import APIInterface from './APIInterface';
 
 export default class APIStub implements APIInterface {
@@ -22,6 +22,14 @@ export default class APIStub implements APIInterface {
     },
   ];
 
+  private static exampleResourcesTypes: ResourceType[] = [
+    {
+      id: 1,
+      name: 'Tipo 1',
+    },
+  ]
+
+
   public async getAll(): Promise<Resource[]> {
     return APIStub.exampleResources;
   }
@@ -32,9 +40,9 @@ export default class APIStub implements APIInterface {
     );
   }
 
-  public async create(resource: Resource): Promise<Resource> {
-    APIStub.exampleResources.push(resource);
-    return resource;
+  public async create(resource: Resource[]): Promise<Resource | undefined> {
+    APIStub.exampleResources.push(resource[0]);
+    return resource[0];
   }
 
   public async delete(id: number): Promise<number> {
@@ -43,4 +51,10 @@ export default class APIStub implements APIInterface {
     );
     return id;
   }
+
+  public async createTypeResource(resourceType: ResourceType): Promise<ResourceType | undefined> {
+    APIStub.exampleResourcesTypes.push(resourceType);
+    return resourceType;
+  }
+
 }

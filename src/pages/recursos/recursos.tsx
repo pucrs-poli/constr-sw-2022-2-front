@@ -8,12 +8,17 @@ import {
   Box,
   TextField,
   Button,
+  IconButton,
 } from '@mui/material';
+// import { DeleteIcon } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from 'react-router-dom';
 import SpeedDialCustom from './components/speedDialCustom';
 import { paths } from 'routes/routes';
 import ResourcesService from 'services/resources';
 import APIStub from './api/APIStub';
+import API from './api/API';
 import { useEffect, useState } from 'react';
 import { Resource, ResourceType } from 'models/resource';
 
@@ -33,12 +38,14 @@ export default function Recursos() {
   /*
     Using stub for mocks, chage APIStub to API when using real API.
   */
-  const resourcesService = new ResourcesService(new APIStub());
+  // const resourcesService = new ResourcesService(new APIStub());
+  const resourcesServiceBack = new ResourcesService(new API());
 
   const [resources, setResources] = useState<Resource[]>([]);
   useEffect(() => {
     const getAllResources = async () => {
-      const response = await resourcesService.getAll();
+      // const response = await resourcesService.getAll();
+      const response = await resourcesServiceBack.getAll();
       setResources(response);
     };
     getAllResources();
@@ -51,8 +58,9 @@ export default function Recursos() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const [description, setDescription] = useState('');
-  const [resourceType, setResourceType] = useState('');
   const [status, setStatus] = useState('');
+  const [resourceTypeId, setResourceTypeId] = useState('');
+  const [resourceType, setResourceType] = useState('');
 
   const [createModal2Open, setCreateModal2Open] = useState(false);
 
@@ -99,8 +107,37 @@ export default function Recursos() {
                   setModalOpen(true);
                 }}
               >
-                <h3>{rec.description}</h3>
-                <p>Tipo do Recurso: {rec.resourceType.name}</p>
+                <Grid
+                  container
+                  spacing={5}
+                  style={{
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Grid item>
+                    <h3>{rec.description}</h3>
+                    <p>Tipo do Recurso: {rec.resourceType.name}</p>
+                  </Grid>
+                  <Grid item>
+                    {/* Quando clica no botao ele ta pegando o card que esta atras */}
+                    <IconButton
+                      onClick={() => {
+                        console.log('errado');
+                      }}
+                    >
+                      <EditIcon style={{ color: 'Grey', fontSize: 30 }} />
+                    </IconButton>
+                    <Button
+                      onClick={() => {
+                        console.log('errado2');
+                        resourcesServiceBack.delete(rec.id!);
+                      }}
+                    >
+                      <DeleteIcon style={{ color: 'red', fontSize: 30 }} />
+                    </Button>
+                  </Grid>
+                </Grid>
               </Card>
             );
           })}
@@ -155,18 +192,26 @@ export default function Recursos() {
             ></TextField>
             <TextField
               style={{ marginTop: '30px', width: '100%' }}
-              label='Tipo do Recurso'
-              value={resourceType}
-              onChange={(e) => {
-                setResourceType(e.target.value);
-              }}
-            ></TextField>
-            <TextField
-              style={{ marginTop: '30px', width: '100%' }}
               label='Status'
               value={status}
               onChange={(e) => {
                 setStatus(e.target.value);
+              }}
+            ></TextField>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Id do Tipo de Recurso'
+              value={resourceTypeId}
+              onChange={(e) => {
+                setResourceTypeId(e.target.value);
+              }}
+            ></TextField>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Tipo do Recurso'
+              value={resourceType}
+              onChange={(e) => {
+                setResourceType(e.target.value);
               }}
             ></TextField>
             <Button
@@ -175,13 +220,14 @@ export default function Recursos() {
               onClick={() => {
                 const newResource: Resource = {
                   description,
+                  status,
                   resourceType: {
+                    id: Number(resourceTypeId),
                     name: resourceType,
                   },
-                  status,
                 };
                 try {
-                  resourcesService.create(newResource);
+                  resourcesServiceBack.create([newResource]);
                   setCreateModalOpen(false);
                 } catch (error) {
                   alert('Erro ao criar recurso!');

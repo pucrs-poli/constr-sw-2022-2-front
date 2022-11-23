@@ -1,4 +1,4 @@
-import { Resource } from 'models/resource';
+import { Resource, ResourceType } from 'models/resource';
 import APIInterface from 'pages/recursos/api/APIInterface';
 
 export default class ResourcesService {
@@ -12,11 +12,15 @@ export default class ResourcesService {
     return await this.api.getOne(id);
   }
 
-  public async create(resource: Resource): Promise<Resource> {
+  public async create(resource: Resource[]): Promise<Resource | undefined> {
     return await this.api.create(resource);
   }
 
   public async delete(id: number): Promise<number> {
     return await this.api.delete(id);
+  }
+
+  public async createTypeResource(resourceType: ResourceType): Promise<ResourceType | undefined> {
+    return await this.api.createTypeResource(resourceType);
   }
 }
