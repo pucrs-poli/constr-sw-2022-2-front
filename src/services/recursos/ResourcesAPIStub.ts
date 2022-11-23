@@ -1,7 +1,7 @@
 import { Resource, ResourceType } from 'models/resource';
-import APIInterface from './APIInterface';
+import ResourcesAPIInterface from './ResourcesAPIInterface';
 
-export default class APIStub implements APIInterface {
+export default class ResourcesAPIStub implements ResourcesAPIInterface {
   constructor() {}
 
   private static exampleResources: Resource[] = [
@@ -64,37 +64,40 @@ export default class APIStub implements APIInterface {
   ];
 
   public async getAll(): Promise<Resource[]> {
-    return APIStub.exampleResources;
+    return ResourcesAPIStub.exampleResources;
   }
 
   public async getOne(id: number): Promise<Resource | undefined> {
-    return APIStub.exampleResources.find((resource) => resource.id === id);
+    return ResourcesAPIStub.exampleResources.find(
+      (resource) => resource.id === id
+    );
   }
 
   public async create(resource: Resource[]): Promise<boolean | undefined> {
     for (const rec of resource) {
-      rec.id = APIStub.exampleResources.length + 1;
-      APIStub.exampleResources.push(rec);
+      rec.id = ResourcesAPIStub.exampleResources.length + 1;
+      ResourcesAPIStub.exampleResources.push(rec);
     }
     return true;
   }
 
   public async delete(id: number): Promise<number> {
-    APIStub.exampleResources = APIStub.exampleResources.filter(
-      (resource) => resource.id !== id
-    );
+    ResourcesAPIStub.exampleResources =
+      ResourcesAPIStub.exampleResources.filter(
+        (resource) => resource.id !== id
+      );
     return id;
   }
 
   public async getAllTypes(): Promise<ResourceType[]> {
-    return APIStub.exampleResourcesTypes;
+    return ResourcesAPIStub.exampleResourcesTypes;
   }
 
   public async createTypeResource(
     resourceType: ResourceType
   ): Promise<boolean | undefined> {
-    resourceType.id = APIStub.exampleResourcesTypes.length + 1;
-    APIStub.exampleResourcesTypes.push(resourceType);
+    resourceType.id = ResourcesAPIStub.exampleResourcesTypes.length + 1;
+    ResourcesAPIStub.exampleResourcesTypes.push(resourceType);
     return true;
   }
 }

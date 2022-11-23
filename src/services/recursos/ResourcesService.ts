@@ -1,8 +1,8 @@
 import { Resource, ResourceType } from 'models/resource';
-import APIInterface from 'pages/recursos/api/APIInterface';
+import ResourcesAPIInterface from './ResourcesAPIInterface';
 
 export default class ResourcesService {
-  constructor(private api: APIInterface) {}
+  constructor(private api: ResourcesAPIInterface) {}
 
   public async getAll(): Promise<Resource[]> {
     return await this.api.getAll();

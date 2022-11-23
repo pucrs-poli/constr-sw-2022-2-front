@@ -1,10 +1,10 @@
 import { Resource, ResourceType } from 'models/resource';
 import axios from 'axios';
-import APIInterface from './APIInterface';
+import ResourcesAPIInterface from './ResourcesAPIInterface';
 
 const BASE_URL: string = 'http://localhost:8082/resources';
 
-export default class API implements APIInterface {
+export default class ResourcesAPI implements ResourcesAPIInterface {
   constructor() {}
 
   public async getAll(): Promise<Resource[]> {

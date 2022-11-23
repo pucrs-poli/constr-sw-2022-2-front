@@ -20,9 +20,9 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { useHistory } from 'react-router-dom';
 import SpeedDialCustom from './components/speedDialCustom';
 import { paths } from 'routes/routes';
-import ResourcesService from 'services/resources';
-import APIStub from './api/APIStub';
-import API from './api/API';
+import ResourcesService from 'services/recursos/ResourcesService';
+import ResourcesAPIStub from '../../services/recursos/ResourcesAPIStub';
+// import ResourcesAPI from '../../services/recursos/ResourcesAPI';
 import { useEffect, useState } from 'react';
 import { Resource, ResourceType } from 'models/resource';
 
@@ -41,17 +41,14 @@ const style = {
 
 export default function Recursos() {
   /*
-    Using stub for mocks, chage APIStub to API when using real API.
+    Using stub for mocked data, change ResourcesAPIStub to ResourcesAPI to use the real API.
   */
-  const resourcesService = new ResourcesService(new APIStub());
-  const resourcesServiceBack = new ResourcesService(new APIStub());
+  const resourcesServiceBack = new ResourcesService(new ResourcesAPIStub());
 
   const [resourcesList, setResourcesList] = useState<Resource[]>([]);
   const [resourceTypeList, setResourceTypeList] = useState<ResourceType[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
   const getAllResourcesAndTypes = async () => {
-    // const response = await resourcesService.getAll();
-    // const responseType = await resourcesService.getAllTypes();
     const response = await resourcesServiceBack.getAll();
     const responseType = await resourcesServiceBack.getAllTypes();
     setResourceTypeList(responseType);
@@ -70,8 +67,6 @@ export default function Recursos() {
 
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
-  // const [resourceTypeId, setResourceTypeId] = useState('');
-  // const [resourceType, setResourceType] = useState('');
 
   const [createModal2Open, setCreateModal2Open] = useState(false);
 
@@ -172,7 +167,7 @@ export default function Recursos() {
                         window.confirm(
                           'Tem certeza que deseja excluir o recurso?'
                         ) &&
-                          resourcesService
+                          resourcesServiceBack
                             .delete(rec.id!)
 
                             .then(() => {
