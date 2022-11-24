@@ -21,20 +21,30 @@ export default function CustomAccordion() {
           id="panel1bh-header"
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            General settings
+            Turma 1
           </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
+          <Typography sx={{ color: 'text.secondary' }}>
+            Turma de Algoritmos
+          </Typography>
           <IconButton sx={{ position: 'absolute', right: '90px', bottom: '3px' }} color="primary">
             <EditIcon />
           </IconButton>
-          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="primary">
+          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="error">
             <DeleteIcon />
           </IconButton>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
+            Numero: 1
+          </Typography>
+          <Typography>
+            Semestre: 2
+          </Typography>
+          <Typography>
+            Ano: 1
+          </Typography>
+          <Typography>
+            Horário:  2JK4JK
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -44,22 +54,31 @@ export default function CustomAccordion() {
           aria-controls="panel2bh-content"
           id="panel2bh-header"
         >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>Users</Typography>
+          <Typography sx={{ width: '33%', flexShrink: 0 }}>
+            Turma 2
+          </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            You are currently not an owner
+            Turma de Linguagens
           </Typography>
           <IconButton sx={{ position: 'absolute', right: '90px', bottom: '3px' }} color="primary">
             <EditIcon />
           </IconButton>
-          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="primary">
+          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="error">
             <DeleteIcon />
           </IconButton>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus,
-            varius pulvinar diam eros in elit. Pellentesque convallis laoreet
-            laoreet.
+            Numero: 1
+          </Typography>
+          <Typography>
+            Semestre: 2
+          </Typography>
+          <Typography>
+            Ano: 1
+          </Typography>
+          <Typography>
+            Horário:  2JK4JK
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -70,22 +89,30 @@ export default function CustomAccordion() {
           id="panel3bh-header"
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            Advanced settings
+            Turma 3
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            Filtering has been entirely disabled for whole web server
+            Turma de Programação
           </Typography>
           <IconButton sx={{ position: 'absolute', right: '90px', bottom: '3px' }} color="primary">
             <EditIcon />
           </IconButton>
-          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="primary">
+          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="error">
             <DeleteIcon />
           </IconButton>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-            amet egestas eros, vitae egestas augue. Duis vel est augue.
+            Numero: 1
+          </Typography>
+          <Typography>
+            Semestre: 2
+          </Typography>
+          <Typography>
+            Ano: 1
+          </Typography>
+          <Typography>
+            Horário:  2JK4JK
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -95,19 +122,31 @@ export default function CustomAccordion() {
           aria-controls="panel4bh-content"
           id="panel4bh-header"
         >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>Personal data</Typography>
-          
+          <Typography sx={{ width: '33%', flexShrink: 0 }}>
+            Turma 4
+          </Typography>
+          <Typography sx={{ color: 'text.secondary' }}>
+            Turma de Construção
+          </Typography>
           <IconButton sx={{ position: 'absolute', right: '90px', bottom: '3px' }} color="primary">
             <EditIcon />
           </IconButton>
-          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="primary">
+          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="error">
             <DeleteIcon />
           </IconButton>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-            amet egestas eros, vitae egestas augue. Duis vel est augue.
+            Numero: 1
+          </Typography>
+          <Typography>
+            Semestre: 2
+          </Typography>
+          <Typography>
+            Ano: 1
+          </Typography>
+          <Typography>
+            Horário:  2JK4JK
           </Typography>
         </AccordionDetails>
       </Accordion>
