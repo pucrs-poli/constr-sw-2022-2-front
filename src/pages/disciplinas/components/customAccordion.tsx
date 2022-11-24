@@ -5,23 +5,19 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import IconButton from '@mui/material/IconButton';
-import { IDisciplina } from '../disciplinas';
-import { useState } from 'react';
-import disciplinasContext from 'contexts/disciplinasContext/disciplinasContext';
+import { useContext, useState } from 'react';
+import { DisciplinasContext } from 'contexts/disciplinasContext/disciplinasContext';
 
 const CusmtomAccordion = () => {
-  const {disciplinas, setDisciplinas} = disciplinasContext();
+  const { disciplinas, updateDisciplinas } = useContext(DisciplinasContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const toggleIsEditing = () => setIsEditing(!isEditing);
-  // const editableIndex = [{}];
-  // const [value, setValue] = useState("");
 
   const handleDelete = (id: string) => {
     const discip = disciplinas.filter((disciplina) => disciplina.id !== id);
-    setDisciplinas(discip);
+    updateDisciplinas(discip);
   };
 
   return (

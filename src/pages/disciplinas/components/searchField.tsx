@@ -1,9 +1,10 @@
 import { IconButton, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import disciplinasContext from 'contexts/disciplinasContext/disciplinasContext';
+import { DisciplinasContext } from 'contexts/disciplinasContext/disciplinasContext';
+import { useContext } from 'react';
 
 export default function SearchField() {
-  const {disciplinas, setDisciplinas} = disciplinasContext();
+  const { updateDisciplinas } = useContext(DisciplinasContext);
 
   return (
     <TextField
@@ -13,7 +14,7 @@ export default function SearchField() {
       fullWidth={true}
       InputProps={{
         endAdornment: (
-          <IconButton onClick={() => setDisciplinas([])}>
+          <IconButton onClick={() => updateDisciplinas([])}>
             <SearchIcon />
           </IconButton>
         ),

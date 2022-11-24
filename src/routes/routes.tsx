@@ -11,6 +11,7 @@ import Disciplinas from 'pages/disciplinas/disciplinas';
 import { ComponentProps, Fragment, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { REDIRECT_URL_KEY } from 'utils/html';
+import DisciplinasProvider from 'contexts/disciplinasContext/disciplinasContext';
 
 interface RouteProps extends ComponentProps<typeof Route> {
   acesso?: (p: Permission) => boolean;
@@ -78,21 +79,23 @@ export default function Routes() {
   const { permission } = useContext(AuthContext);
 
   return (
-    <Switch>
-      {permission ? (
-        routes.map((r, i) => {
-          const component =
-            typeof r.acesso === 'undefined' || r.acesso(permission)
-              ? r.component
-              : Forbidden;
-          return <Route {...r} key={i} component={component} />;
-        })
-      ) : (
-        <Fragment>
-          <Route path={paths.loginPage} component={Login} />
-          <Redirect to={paths.loginPage} />
-        </Fragment>
-      )}
-    </Switch>
+    <DisciplinasProvider>
+      <Switch>
+        {permission ? (
+          routes.map((r, i) => {
+            const component =
+              typeof r.acesso === 'undefined' || r.acesso(permission)
+                ? r.component
+                : Forbidden;
+            return <Route {...r} key={i} component={component} />;
+          })
+        ) : (
+          <Fragment>
+            <Route path={paths.loginPage} component={Login} />
+            <Redirect to={paths.loginPage} />
+          </Fragment>
+        )}
+      </Switch>
+    </DisciplinasProvider>
   );
 }

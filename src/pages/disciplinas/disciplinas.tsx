@@ -1,26 +1,9 @@
 import { Breadcrumbs, Grid, Link, Typography, Container } from '@mui/material';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { paths } from 'routes/routes';
 import CusmtomAccordion from './components/customAccordion';
 import SearchHeader from './components/searchHeader';
-
-export interface ICurriculo {
-  idCurriculo: number;
-  nomeCurso: string;
-  dataInicioVigencia: string;
-  dataFimVigencia: string;
-}
-
-export interface IDisciplina {
-  id: string;
-  nome: string;
-  creditos: number;
-  programa: string;
-  itensBlibliograficos: string[];
-  curriculo: ICurriculo;
-}
 
 export default function Disciplinas() {
   const history = useHistory();
