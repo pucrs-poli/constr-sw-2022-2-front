@@ -1,4 +1,4 @@
-import { Typography, Box, Grid } from '@mui/material';
+import { Typography, Box, Grid, Fab } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
 import SearchField from './searchField';
 

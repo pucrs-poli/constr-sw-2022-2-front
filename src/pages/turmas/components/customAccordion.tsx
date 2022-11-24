@@ -1,7 +1,8 @@
 import React from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Typography, IconButton } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Typography, IconButton, } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { PhotoCamera } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function CustomAccordion() {
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -23,9 +24,11 @@ export default function CustomAccordion() {
             General settings
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
-          <IconButton color="primary" aria-label="upload picture" component="label">
-            <input hidden accept="image/*" type="file" />
-            <PhotoCamera />
+          <IconButton sx={{ position: 'absolute', right: '90px', bottom: '3px' }} color="primary">
+            <EditIcon />
+          </IconButton>
+          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="primary">
+            <DeleteIcon />
           </IconButton>
         </AccordionSummary>
         <AccordionDetails>
@@ -45,6 +48,12 @@ export default function CustomAccordion() {
           <Typography sx={{ color: 'text.secondary' }}>
             You are currently not an owner
           </Typography>
+          <IconButton sx={{ position: 'absolute', right: '90px', bottom: '3px' }} color="primary">
+            <EditIcon />
+          </IconButton>
+          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="primary">
+            <DeleteIcon />
+          </IconButton>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -66,6 +75,12 @@ export default function CustomAccordion() {
           <Typography sx={{ color: 'text.secondary' }}>
             Filtering has been entirely disabled for whole web server
           </Typography>
+          <IconButton sx={{ position: 'absolute', right: '90px', bottom: '3px' }} color="primary">
+            <EditIcon />
+          </IconButton>
+          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="primary">
+            <DeleteIcon />
+          </IconButton>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -81,6 +96,13 @@ export default function CustomAccordion() {
           id="panel4bh-header"
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>Personal data</Typography>
+          
+          <IconButton sx={{ position: 'absolute', right: '90px', bottom: '3px' }} color="primary">
+            <EditIcon />
+          </IconButton>
+          <IconButton sx={{ position: 'absolute', right: '50px', bottom: '3px' }} color="primary">
+            <DeleteIcon />
+          </IconButton>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>

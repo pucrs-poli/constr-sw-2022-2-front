@@ -1,9 +1,10 @@
-import { Breadcrumbs, Grid, Link, Typography, Container } from '@mui/material';
+import { Breadcrumbs, Grid, Link, Typography, Container, Fab } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 import { paths } from 'routes/routes';
 import CustomAccordion from './components/customAccordion';
 import SearchHeader from './components/searchHeader';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Turmas() {
   const history = useHistory();
@@ -28,6 +29,9 @@ export default function Turmas() {
         <Container maxWidth='md' sx={{ backgroundColor: '#f5f5f5', paddingTop: "20px", paddingBottom: "20px", borderRadius: "1%"}}>
           <SearchHeader />
           <CustomAccordion />
+          <Fab sx={{ top: '10px'}} color="secondary" aria-label="add" size="small">
+            <AddIcon />
+          </Fab>
         </Container>
       </Grid>
     </Grid>
