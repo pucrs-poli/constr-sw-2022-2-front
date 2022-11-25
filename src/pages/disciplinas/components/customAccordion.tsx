@@ -10,14 +10,16 @@ import { useContext, useState } from 'react';
 import { DisciplinasContext } from 'contexts/disciplinasContext/disciplinasContext';
 
 const CusmtomAccordion = () => {
-  const { disciplinas, updateDisciplinas } = useContext(DisciplinasContext);
+  const { disciplinas, store, setDisciplinas, setStore } = useContext(DisciplinasContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const toggleIsEditing = () => setIsEditing(!isEditing);
 
   const handleDelete = (id: string) => {
     const discip = disciplinas.filter((disciplina) => disciplina.id !== id);
-    updateDisciplinas(discip);
+    const removeFromStore = store.filter((disciplina) => disciplina.id !== id);
+    setDisciplinas(discip);
+    setStore(removeFromStore);
   };
 
   return (

@@ -18,8 +18,10 @@ export interface IDisciplina {
 
 export interface IDisciplinas {
   disciplinas: IDisciplina[];
-  updateDisciplinas: (disciplinas: IDisciplina[]) => void;
+  store: IDisciplina[];
+  setDisciplinas: (disciplinas: IDisciplina[]) => void;
   searchDisciplinas: (searchField: string) => void;
+  setStore: (disciplinas: IDisciplina[]) => void;
 }
 
 export const DisciplinasContext = createContext<IDisciplinas>({
@@ -137,8 +139,123 @@ export const DisciplinasContext = createContext<IDisciplinas>({
       },
     },
   ],
-  updateDisciplinas: (disciplinas: IDisciplina[]) => {},
+  store: [
+    {
+      id: '1',
+      nome: 'Construção de Software',
+      creditos: 4,
+      programa: 'Programa da disciplina',
+      itensBlibliograficos: [
+        'Livro de Engenharia de Software 1',
+        'Livro de Engenharia de Software 2',
+      ],
+      curriculo: {
+        idCurriculo: 100,
+        nomeCurso: 'Engenharia de Software',
+        dataInicioVigencia: '01/01/2021',
+        dataFimVigencia: '31/12/2021',
+      },
+    },
+    {
+      id: '2',
+      nome: 'Engenharia Experimental de Software',
+      creditos: 2,
+      programa: 'Programa da disciplina',
+      itensBlibliograficos: [
+        'Livro de Engenharia de Software 1',
+        'Livro de Engenharia de Software 2',
+      ],
+      curriculo: {
+        idCurriculo: 100,
+        nomeCurso: 'Engenharia de Software',
+        dataInicioVigencia: '01/01/2021',
+        dataFimVigencia: '31/12/2021',
+      },
+    },
+    {
+      id: '3',
+      nome: 'Paralela e Distribuida',
+      creditos: 2,
+      programa: 'Programa da disciplina',
+      itensBlibliograficos: [
+        'Livro de Engenharia de Software 1',
+        'Livro de Engenharia de Software 2',
+      ],
+      curriculo: {
+        idCurriculo: 100,
+        nomeCurso: 'Engenharia de Software',
+        dataInicioVigencia: '01/01/2021',
+        dataFimVigencia: '31/12/2021',
+      },
+    },
+    {
+      id: '4',
+      nome: 'Banco de Dados II',
+      creditos: 2,
+      programa: 'Programa da disciplina',
+      itensBlibliograficos: [
+        'Livro de Engenharia de Software 1',
+        'Livro de Engenharia de Software 2',
+      ],
+      curriculo: {
+        idCurriculo: 100,
+        nomeCurso: 'Engenharia de Software',
+        dataInicioVigencia: '01/01/2021',
+        dataFimVigencia: '31/12/2021',
+      },
+    },
+    {
+      id: '5',
+      nome: 'Intrudução a Inteligência Artificial',
+      creditos: 4,
+      programa: 'Programa da disciplina',
+      itensBlibliograficos: [
+        'Livro de Engenharia de Software 1',
+        'Livro de Engenharia de Software 2',
+      ],
+      curriculo: {
+        idCurriculo: 100,
+        nomeCurso: 'Engenharia de Software',
+        dataInicioVigencia: '01/01/2021',
+        dataFimVigencia: '31/12/2021',
+      },
+    },
+    {
+      id: '6',
+      nome: 'Design de Iteração',
+      creditos: 4,
+      programa: 'Programa da disciplina',
+      itensBlibliograficos: [
+        'Livro de Engenharia de Software 1',
+        'Livro de Engenharia de Software 2',
+      ],
+      curriculo: {
+        idCurriculo: 100,
+        nomeCurso: 'Engenharia de Software',
+        dataInicioVigencia: '01/01/2021',
+        dataFimVigencia: '31/12/2021',
+      },
+    },
+    {
+      id: '7',
+      nome: 'Lógica de Programação',
+      creditos: 4,
+      programa: 'Programa da disciplina',
+      itensBlibliograficos: [
+        'Livro de Engenharia de Software 1',
+        'Livro de Engenharia de Software 2',
+      ],
+      curriculo: {
+        idCurriculo: 100,
+        nomeCurso: 'Engenharia de Software',
+        dataInicioVigencia: '01/01/2021',
+        dataFimVigencia: '31/12/2021',
+      },
+    },
+  ],
+  setDisciplinas: (disciplinas: IDisciplina[]) => {},
   searchDisciplinas: (searchField: string) => {},
+  setStore: (disciplinas: IDisciplina[]) => {},
 });
 
 const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
@@ -257,7 +374,7 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
     },
   ]);
 
-  const [store] = useState([
+  const [store, setStore] = useState([
     {
       id: '1',
       nome: 'Construção de Software',
@@ -372,10 +489,6 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
     },
   ]);
 
-  const updateDisciplinas = (disciplinas: IDisciplina[]) => {
-    setDisciplinas(disciplinas);
-  };
-
   const searchDisciplinas = (nome: string) => {
     if (nome.length === 0) {
       setDisciplinas(store);
@@ -390,7 +503,7 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <DisciplinasContext.Provider
-      value={{ disciplinas, updateDisciplinas, searchDisciplinas }}
+      value={{ disciplinas, setDisciplinas, searchDisciplinas, setStore, store }}
     >
       {children}
     </DisciplinasContext.Provider>
