@@ -1,4 +1,10 @@
-import { Breadcrumbs, Grid, Link, Typography, Container } from '@mui/material';
+import {
+  Breadcrumbs,
+  Grid,
+  Link,
+  Typography,
+  Container,
+} from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { paths } from 'routes/routes';
 import CusmtomAccordion from './components/customAccordion';
