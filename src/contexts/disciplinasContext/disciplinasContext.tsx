@@ -42,6 +42,9 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       itensBlibliograficos: [
         'Livro: Clean Code',
         'Livro: Learning JavaScript Design Patterns',
+        'Livro: S.O.L.I.D',
+        'Artigo: Melhores Práticas em Microsserviços',
+        'Livro: Microsserviços Prontos Para a Produção: Construindo Sistemas Padronizados em uma Organização de Engenharia de Software'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -58,7 +61,10 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       itensBlibliograficos: [
         'Livro: Engenharia de Software Moderna',
         'Livro: Engenharia de Software na Prática',
-        'Livro: Experimentation in Software Engineering'
+        'Livro: Experimentation in Software Engineering',
+        'Livro: Engenharia Experimental de Software volume 1',
+        'Livro: Engenharia Experimental de Software volume 2',
+        'Livro: Pair Programming Practice'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -73,9 +79,11 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       creditos: 4,
       programa: 'Programação',
       itensBlibliograficos: [
+        'Livro: A Linguagem de Programação Go',
         'Livro: Hands-On Software Engineering with Golang',
         'Livro: The Little Book of Semaphores',
-        'Livro: Principles of Concurrent and Distributed Programming'
+        'Livro: Principles of Concurrent and Distributed Programming',
+        'Livro: Programação Paralela e Distribuída (com MPI, OpenMP e OpenACC para computação de alto desempenho)'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -90,7 +98,13 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       creditos: 2,
       programa: 'Modelagem de banco de dados',
       itensBlibliograficos: [
-        'Livro: Modelagem De Dados ',
+        'Livro: Modelagem De Dados',
+        'Livro: Banco de Dados Projeto e Implementação',
+        'Livro: Banco de dados: Teoria e Desenvolvimento',
+        'Livro: Projeto e Modelagem de Banco de Dados 3a Edição',
+        'Livro: Projeto e Modelagem de Banco de Dados 4a Edição',
+        'Livro: Projeto e Modelagem de Banco de Dados 5a Edição',
+        'Livro: Introdução a Sistemas de Bancos de Dados'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -107,6 +121,10 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       itensBlibliograficos: [
         'Livro: Artificial Intelligence Basics',
         'Livro: Python Machine Learning',
+        'Livro: Introdução à Inteligência Artificial: Uma abordagem não técnina',
+        'Livro: Inteligência Artificial - Uma Abordagem de Aprendizado de Máquina',
+        'Livro: Algorithms (IA)',
+        'Livro: Algoritmos - Teoria e Prática (IA)'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -123,6 +141,10 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       itensBlibliograficos: [
         'Livro: UX Design: Guia Definitivo com as Melhores Práticas de UX',
         'Livro: Designing Interfaces: Patterns for Effective Interaction Design',
+        'Livro: Design de Interfaces: Introdução',
+        'Livro: Introdução e boas práticas em UX Design',
+        'Livro: Designing Interfaces',
+        'Livro: 101 Design Methods'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -138,6 +160,10 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       programa: 'Práticas lógicas',
       itensBlibliograficos: [
         'Livro: Lógica Para Computação',
+        'Livro: Decisões Inteligentes',
+        'Livro: Aprendendo Lógica',
+        'Livro: O Grande Livro de Raciocínio Lógico',
+        'Livro: Introdução à Lógica Matemática'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -157,6 +183,9 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       itensBlibliograficos: [
         'Livro: Clean Code',
         'Livro: Learning JavaScript Design Patterns',
+        'Livro: S.O.L.I.D',
+        'Artigo: Melhores Práticas em Microsserviços',
+        'Livro: Microsserviços Prontos Para a Produção: Construindo Sistemas Padronizados em uma Organização de Engenharia de Software'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -173,7 +202,10 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       itensBlibliograficos: [
         'Livro: Engenharia de Software Moderna',
         'Livro: Engenharia de Software na Prática',
-        'Livro: Experimentation in Software Engineering'
+        'Livro: Experimentation in Software Engineering',
+        'Livro: Engenharia Experimental de Software volume 1',
+        'Livro: Engenharia Experimental de Software volume 2',
+        'Livro: Pair Programming Practice'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -188,9 +220,11 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       creditos: 4,
       programa: 'Programação',
       itensBlibliograficos: [
+        'Livro: A Linguagem de Programação Go',
         'Livro: Hands-On Software Engineering with Golang',
         'Livro: The Little Book of Semaphores',
-        'Livro: Principles of Concurrent and Distributed Programming'
+        'Livro: Principles of Concurrent and Distributed Programming',
+        'Livro: Programação Paralela e Distribuída (com MPI, OpenMP e OpenACC para computação de alto desempenho)'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -205,7 +239,13 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       creditos: 2,
       programa: 'Modelagem de banco de dados',
       itensBlibliograficos: [
-        'Livro: Modelagem De Dados ',
+        'Livro: Modelagem De Dados',
+        'Livro: Banco de Dados Projeto e Implementação',
+        'Livro: Banco de dados: Teoria e Desenvolvimento',
+        'Livro: Projeto e Modelagem de Banco de Dados 3a Edição',
+        'Livro: Projeto e Modelagem de Banco de Dados 4a Edição',
+        'Livro: Projeto e Modelagem de Banco de Dados 5a Edição',
+        'Livro: Introdução a Sistemas de Bancos de Dados'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -222,6 +262,10 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       itensBlibliograficos: [
         'Livro: Artificial Intelligence Basics',
         'Livro: Python Machine Learning',
+        'Livro: Introdução à Inteligência Artificial: Uma abordagem não técnina',
+        'Livro: Inteligência Artificial - Uma Abordagem de Aprendizado de Máquina',
+        'Livro: Algorithms (IA)',
+        'Livro: Algoritmos - Teoria e Prática (IA)'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -238,6 +282,10 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       itensBlibliograficos: [
         'Livro: UX Design: Guia Definitivo com as Melhores Práticas de UX',
         'Livro: Designing Interfaces: Patterns for Effective Interaction Design',
+        'Livro: Design de Interfaces: Introdução',
+        'Livro: Introdução e boas práticas em UX Design',
+        'Livro: Designing Interfaces',
+        'Livro: 101 Design Methods'
       ],
       curriculo: {
         idCurriculo: 4630,
@@ -253,6 +301,10 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
       programa: 'Práticas lógicas',
       itensBlibliograficos: [
         'Livro: Lógica Para Computação',
+        'Livro: Decisões Inteligentes',
+        'Livro: Aprendendo Lógica',
+        'Livro: O Grande Livro de Raciocínio Lógico',
+        'Livro: Introdução à Lógica Matemática'
       ],
       curriculo: {
         idCurriculo: 4630,
