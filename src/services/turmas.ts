@@ -1,4 +1,4 @@
-import { Turmas } from 'pages/turmas/turmas';
+import { Turmas } from 'models/turmas';
 import { toRequest } from 'utils/request';
 import { api } from './api';
 import { getEnvironment } from './environment';
