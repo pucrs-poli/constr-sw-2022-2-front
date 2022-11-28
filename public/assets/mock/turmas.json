@@ -1,0 +1,26 @@
+[
+    {
+        "nome": "Turma 301",
+        "numero": "31",
+        "semestre": "6",
+        "ano": "2022",
+        "horario": "2LM4LM",
+        "disciplina": "Laboratório de Programação"
+    },
+    {
+        "nome": "Turma 401",
+        "numero": "41",
+        "semestre": "2",
+        "ano": "2022",
+        "horario": "3JK5JK",
+        "disciplina": "Banco de dados I"
+    },
+    {
+        "nome": "Turma 501",
+        "numero": "51",
+        "semestre": "8",
+        "ano": "2022",
+        "horario": "6LMNP",
+        "disciplina": "Fundamentos de Programação"
+    }
+]
