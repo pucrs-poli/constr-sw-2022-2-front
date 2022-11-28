@@ -13,7 +13,10 @@ import AddIcon from '@mui/icons-material/Add';
 import React, { useContext } from 'react';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { DisciplinasContext, IDisciplina } from 'contexts/disciplinasContext/disciplinasContext';
+import {
+  DisciplinasContext,
+  IDisciplina,
+} from 'contexts/disciplinasContext/disciplinasContext';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -30,12 +33,27 @@ const style = {
 };
 
 export default function SearchHeader() {
-  const { disciplinas, setDisciplinas } =
-  useContext(DisciplinasContext);
+  const { disciplinas, setDisciplinas } = useContext(DisciplinasContext);
 
   const [open, setOpen] = React.useState(false);
   const handleModal = () => {
     setOpen(!open);
+  };
+
+  const initialDisciplina: IDisciplina = {
+    id: '',
+    nome: '',
+    creditos: 0,
+    programa: '',
+    itensBlibliograficos: [],
+    curriculo: [
+      {
+        idCurriculo: 0,
+        nomeCurso: '',
+        dataInicioVigencia: '',
+        dataFimVigencia: '',
+      },
+    ],
   };
 
   const [newDisciplina, setNewDisciplina] = React.useState<IDisciplina>({
@@ -44,12 +62,14 @@ export default function SearchHeader() {
     creditos: 0,
     programa: '',
     itensBlibliograficos: [],
-    curriculo: {
-      idCurriculo: 0,
-      nomeCurso: '',
-      dataInicioVigencia: '',
-      dataFimVigencia: '',
-    },
+    curriculo: [
+      {
+        idCurriculo: 0,
+        nomeCurso: '',
+        dataInicioVigencia: '',
+        dataFimVigencia: '',
+      },
+    ],
   });
 
   return (
@@ -152,70 +172,77 @@ export default function SearchHeader() {
                 </Grid>
                 <Grid item xs={6} />
                 <Grid item xs={6}>
-                  <TextField
-                    id='campo-codcred'
-                    label='CodCred'
-                    variant='standard'
-                    value={newDisciplina.curriculo.idCurriculo}
-                    onChange={(e) => {
-                      setNewDisciplina({
-                        ...newDisciplina,
-                        curriculo: {
-                          ...newDisciplina.curriculo,
-                          idCurriculo: Number(e.target.value),
-                        },
-                      });
-                    }}
-                  />
-                  <br />
-                  <TextField
-                    id='campo-curso'
-                    label='Curso'
-                    variant='standard'
-                    value={newDisciplina.curriculo.nomeCurso}
-                    onChange={(e) => {
-                      setNewDisciplina({
-                        ...newDisciplina,
-                        curriculo: {
-                          ...newDisciplina.curriculo,
-                          nomeCurso: e.target.value,
-                        },
-                      });
-                    }}
-                  />
-                  <br />
-                  <TextField
-                    id='campo-periodo'
-                    label='Período'
-                    variant='standard'
-                    value={newDisciplina.curriculo.dataInicioVigencia}
-                    onChange={(e) => {
-                      setNewDisciplina({
-                        ...newDisciplina,
-                        curriculo: {
-                          ...newDisciplina.curriculo,
-                          dataInicioVigencia: e.target.value,
-                        },
-                      });
-                    }}
-                  />
+                  {newDisciplina.curriculo.map((curriculo, idx) => {
+                    return (
+                      <div key={`${idx}-curriHead`}>
+                        <TextField
+                          id='campo-codcred'
+                          label='CodCred'
+                          variant='standard'
+                          value={curriculo.idCurriculo}
+                          onChange={(e) => {
+                            setNewDisciplina({
+                              ...newDisciplina,
+                              curriculo: [...newDisciplina.curriculo],
+                            });
+                          }}
+                        />
+                        <br />
+                        <TextField
+                          id='campo-curso'
+                          label='Curso'
+                          variant='standard'
+                          value={curriculo.nomeCurso}
+                          onChange={(e) => {
+                            setNewDisciplina({
+                              ...newDisciplina,
+                              curriculo: {
+                                ...newDisciplina.curriculo,
+                              },
+                            });
+                          }}
+                        />
+                        <br />
+                        <TextField
+                          id='campo-periodo'
+                          label='Período'
+                          variant='standard'
+                          value={curriculo.dataInicioVigencia}
+                          onChange={(e) => {
+                            setNewDisciplina({
+                              ...newDisciplina,
+                              curriculo: {
+                                ...newDisciplina.curriculo,
+                              },
+                            });
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
                 </Grid>
                 <Grid item xs={6}>
-                  <IconButton>
+                  <IconButton
+                    onClick={() => {
+                      setDisciplinas([...disciplinas, newDisciplina]);
+                      handleModal();
+                      setNewDisciplina(initialDisciplina);
+                    }}
+                  >
                     <CheckIcon
                       color='success'
                       sx={{ height: '50px', width: '50px' }}
-                      onClick={() => {
-                        setDisciplinas([...disciplinas, newDisciplina]);
-                        handleModal(); 
-                      }}
                     />
                   </IconButton>
-                  <IconButton>
+                  <IconButton
+                    onClick={() => {
+                      handleModal();
+                      setNewDisciplina(initialDisciplina);
+                    }}
+                  >
                     <CloseIcon
                       color='warning'
                       sx={{ height: '50px', width: '50px' }}
-                      onClick={() => handleModal()}
                     />
                   </IconButton>
                 </Grid>

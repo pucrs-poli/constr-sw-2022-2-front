@@ -13,7 +13,7 @@ export interface IDisciplina {
   creditos: number;
   programa: string;
   itensBlibliograficos: string[];
-  curriculo: ICurriculo;
+  curriculo: ICurriculo[];
 }
 
 export interface IDisciplinas {
@@ -44,14 +44,22 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Learning JavaScript Design Patterns',
         'Livro: S.O.L.I.D',
         'Artigo: Melhores Práticas em Microsserviços',
-        'Livro: Microsserviços Prontos Para a Produção: Construindo Sistemas Padronizados em uma Organização de Engenharia de Software'
+        'Livro: Microsserviços Prontos Para a Produção: Construindo Sistemas Padronizados em uma Organização de Engenharia de Software',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2022',
-        dataFimVigencia: '05/07/2022',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2022',
+          dataFimVigencia: '05/07/2022',
+        },
+        {
+          idCurriculo: 7820,
+          nomeCurso: 'Foguete Não Tem Ré',
+          dataInicioVigencia: '03/03/2022',
+          dataFimVigencia: '05/07/2022',
+        },
+      ],
     },
     {
       id: '2',
@@ -64,14 +72,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Experimentation in Software Engineering',
         'Livro: Engenharia Experimental de Software volume 1',
         'Livro: Engenharia Experimental de Software volume 2',
-        'Livro: Pair Programming Practice'
+        'Livro: Pair Programming Practice',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2022',
-        dataFimVigencia: '05/07/2022',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2022',
+          dataFimVigencia: '05/07/2022',
+        },
+      ],
     },
     {
       id: '3',
@@ -83,14 +93,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Hands-On Software Engineering with Golang',
         'Livro: The Little Book of Semaphores',
         'Livro: Principles of Concurrent and Distributed Programming',
-        'Livro: Programação Paralela e Distribuída (com MPI, OpenMP e OpenACC para computação de alto desempenho)'
+        'Livro: Programação Paralela e Distribuída (com MPI, OpenMP e OpenACC para computação de alto desempenho)',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '05/08/2022',
-        dataFimVigencia: '08/12/2022',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '05/08/2022',
+          dataFimVigencia: '08/12/2022',
+        },
+      ],
     },
     {
       id: '4',
@@ -104,14 +116,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Projeto e Modelagem de Banco de Dados 3a Edição',
         'Livro: Projeto e Modelagem de Banco de Dados 4a Edição',
         'Livro: Projeto e Modelagem de Banco de Dados 5a Edição',
-        'Livro: Introdução a Sistemas de Bancos de Dados'
+        'Livro: Introdução a Sistemas de Bancos de Dados',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '05/08/2022',
-        dataFimVigencia: '08/12/2022',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '05/08/2022',
+          dataFimVigencia: '08/12/2022',
+        },
+      ],
     },
     {
       id: '5',
@@ -124,14 +138,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Introdução à Inteligência Artificial: Uma abordagem não técnina',
         'Livro: Inteligência Artificial - Uma Abordagem de Aprendizado de Máquina',
         'Livro: Algorithms (IA)',
-        'Livro: Algoritmos - Teoria e Prática (IA)'
+        'Livro: Algoritmos - Teoria e Prática (IA)',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2021',
-        dataFimVigencia: '05/07/2021',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2021',
+          dataFimVigencia: '05/07/2021',
+        },
+      ],
     },
     {
       id: '6',
@@ -144,14 +160,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Design de Interfaces: Introdução',
         'Livro: Introdução e boas práticas em UX Design',
         'Livro: Designing Interfaces',
-        'Livro: 101 Design Methods'
+        'Livro: 101 Design Methods',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2021',
-        dataFimVigencia: '05/07/2021',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2021',
+          dataFimVigencia: '05/07/2021',
+        },
+      ],
     },
     {
       id: '7',
@@ -163,14 +181,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Decisões Inteligentes',
         'Livro: Aprendendo Lógica',
         'Livro: O Grande Livro de Raciocínio Lógico',
-        'Livro: Introdução à Lógica Matemática'
+        'Livro: Introdução à Lógica Matemática',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2021',
-        dataFimVigencia: '05/07/2021',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2021',
+          dataFimVigencia: '05/07/2021',
+        },
+      ],
     },
   ]);
 
@@ -185,14 +205,22 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Learning JavaScript Design Patterns',
         'Livro: S.O.L.I.D',
         'Artigo: Melhores Práticas em Microsserviços',
-        'Livro: Microsserviços Prontos Para a Produção: Construindo Sistemas Padronizados em uma Organização de Engenharia de Software'
+        'Livro: Microsserviços Prontos Para a Produção: Construindo Sistemas Padronizados em uma Organização de Engenharia de Software',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2022',
-        dataFimVigencia: '05/07/2022',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2022',
+          dataFimVigencia: '05/07/2022',
+        },
+        {
+          idCurriculo: 7820,
+          nomeCurso: 'Foguete Não Tem Ré',
+          dataInicioVigencia: '03/03/2022',
+          dataFimVigencia: '05/07/2022',
+        },
+      ],
     },
     {
       id: '2',
@@ -205,14 +233,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Experimentation in Software Engineering',
         'Livro: Engenharia Experimental de Software volume 1',
         'Livro: Engenharia Experimental de Software volume 2',
-        'Livro: Pair Programming Practice'
+        'Livro: Pair Programming Practice',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2022',
-        dataFimVigencia: '05/07/2022',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2022',
+          dataFimVigencia: '05/07/2022',
+        },
+      ],
     },
     {
       id: '3',
@@ -224,14 +254,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Hands-On Software Engineering with Golang',
         'Livro: The Little Book of Semaphores',
         'Livro: Principles of Concurrent and Distributed Programming',
-        'Livro: Programação Paralela e Distribuída (com MPI, OpenMP e OpenACC para computação de alto desempenho)'
+        'Livro: Programação Paralela e Distribuída (com MPI, OpenMP e OpenACC para computação de alto desempenho)',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '05/08/2022',
-        dataFimVigencia: '08/12/2022',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '05/08/2022',
+          dataFimVigencia: '08/12/2022',
+        },
+      ],
     },
     {
       id: '4',
@@ -245,14 +277,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Projeto e Modelagem de Banco de Dados 3a Edição',
         'Livro: Projeto e Modelagem de Banco de Dados 4a Edição',
         'Livro: Projeto e Modelagem de Banco de Dados 5a Edição',
-        'Livro: Introdução a Sistemas de Bancos de Dados'
+        'Livro: Introdução a Sistemas de Bancos de Dados',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '05/08/2022',
-        dataFimVigencia: '08/12/2022',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '05/08/2022',
+          dataFimVigencia: '08/12/2022',
+        },
+      ],
     },
     {
       id: '5',
@@ -265,14 +299,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Introdução à Inteligência Artificial: Uma abordagem não técnina',
         'Livro: Inteligência Artificial - Uma Abordagem de Aprendizado de Máquina',
         'Livro: Algorithms (IA)',
-        'Livro: Algoritmos - Teoria e Prática (IA)'
+        'Livro: Algoritmos - Teoria e Prática (IA)',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2021',
-        dataFimVigencia: '05/07/2021',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2021',
+          dataFimVigencia: '05/07/2021',
+        },
+      ],
     },
     {
       id: '6',
@@ -285,14 +321,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Design de Interfaces: Introdução',
         'Livro: Introdução e boas práticas em UX Design',
         'Livro: Designing Interfaces',
-        'Livro: 101 Design Methods'
+        'Livro: 101 Design Methods',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2021',
-        dataFimVigencia: '05/07/2021',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2021',
+          dataFimVigencia: '05/07/2021',
+        },
+      ],
     },
     {
       id: '7',
@@ -304,14 +342,16 @@ const DisciplinasProvider = ({ children }: { children: ReactNode }) => {
         'Livro: Decisões Inteligentes',
         'Livro: Aprendendo Lógica',
         'Livro: O Grande Livro de Raciocínio Lógico',
-        'Livro: Introdução à Lógica Matemática'
+        'Livro: Introdução à Lógica Matemática',
       ],
-      curriculo: {
-        idCurriculo: 4630,
-        nomeCurso: 'Engenharia de Software',
-        dataInicioVigencia: '03/03/2021',
-        dataFimVigencia: '05/07/2021',
-      },
+      curriculo: [
+        {
+          idCurriculo: 4630,
+          nomeCurso: 'Engenharia de Software',
+          dataInicioVigencia: '03/03/2021',
+          dataFimVigencia: '05/07/2021',
+        },
+      ],
     },
   ]);
 
