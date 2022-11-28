@@ -20,7 +20,7 @@ export const paths = {
   homePage: '/',
   loginPage: '/login',
   prediosSalas: '/predios-salas',
-  predio: '/predios-salas/novo',
+  predio: '/predios-salas/adicionar',
   editarPredio: '/predios-salas/:id',
   recursos: '/recursos',
   disciplinas: '/disciplinas',

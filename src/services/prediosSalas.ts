@@ -3,18 +3,18 @@ import { toRequest } from 'utils/request';
 import { api } from './api';
 import { getEnvironment } from './environment';
 
-const getPrediosSalasEndpoint = () => `${getEnvironment()?.prediosSalas}`
+const getPrediosSalasEndpoint = () => `${getEnvironment()?.prediosSalas}`;
 
 export const getAllPredios = () => {
   const url = `${getPrediosSalasEndpoint()}/building`;
   // TODO: DESLIGAR O mock
-  return toRequest<Predio[]>(api.get, [url], 'getPredios', true);
+  return toRequest<Predio[]>(api.get, [url], 'getPredios', false);
 };
 
 export const getPredioByID = (id: string) => {
   const url = `${getPrediosSalasEndpoint()}/building/${id}`;
   // TODO: Desligar o mock
-  return toRequest<Predio>(api.get, [url], 'getPredio', true);
+  return toRequest<Predio>(api.get, [url], 'getPredio', false);
 };
 
 // export const getAllSalas = (idPredio: string) => {
@@ -23,23 +23,35 @@ export const getPredioByID = (id: string) => {
 //   return toRequest<Sala[]>(api.get, [url], 'getSalas', true);
 // };
 
-export const postPredio = () => {
-  return Promise.reject();
+export const postPutPredio = (predio: Partial<Predio>) => {
+  const url = `${getPrediosSalasEndpoint()}/building${
+    predio._id ? `/${predio._id}` : ''
+  }`;
+
+  return toRequest<Predio>(predio._id ? api.put : api.post, [
+    url,
+    { ...predio, _id: undefined, __v: undefined },
+  ]);
 };
+
 export const postSala = () => {
   return Promise.reject();
 };
 
-export const putPredio = () => {
-  return Promise.reject();
-};
 export const putSala = () => {
   return Promise.reject();
 };
 
-export const deletePredios = (...id: number[]) => {
-  return Promise.reject();
+export const deletePredios = (...ids: string[]) => {
+  console.log(ids);
+  return Promise.all(
+    ids.map((id) => {
+      const url = `${getPrediosSalasEndpoint()}/building/${id}`;
+      return toRequest<void>(api.delete, [url]);
+    })
+  );
 };
-export const deleteSalas = (...id: number[]) => {
+
+export const deleteSalas = (...id: string[]) => {
   return Promise.reject();
 };

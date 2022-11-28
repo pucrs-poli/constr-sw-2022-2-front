@@ -11,12 +11,14 @@ import {
   Typography,
 } from '@mui/material';
 import ConfirmModal from 'components/confirmModal/confirmModal';
+import { closeModal, openModal } from 'components/modalManager/modalManager';
 import { Predio } from 'models/prediosSalas';
+import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { paths } from 'routes/routes';
-import { getAllPredios } from 'services/prediosSalas';
+import { deletePredios, getAllPredios } from 'services/prediosSalas';
 import PredioItem from './components/predioItem/predioItem';
 
 export default function PrediosSalas() {
@@ -24,7 +26,7 @@ export default function PrediosSalas() {
   const [predios, setPredios] = useState<Predio[]>([]);
   const [loadingPredios, setLoadingPredios] = useState<boolean>(true);
   const [filtro, setFiltro] = useState<string>('');
-  const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const prediosFiltrados = useMemo(
     () =>
@@ -47,17 +49,43 @@ export default function PrediosSalas() {
       const req = await getAllPredios();
       setPredios(req.data);
     } catch (err) {
-      // TODO: ERR MESSAGE
-      console.log('ALERTA DE ERRO', err);
+      enqueueSnackbar(
+        (err as any)?.response?.data ?? 'Erro ao carregar prédios!',
+        {
+          variant: 'error',
+        }
+      );
     } finally {
       setLoadingPredios(false);
     }
-  }, []);
+  }, [enqueueSnackbar]);
 
   useEffect(() => {
     loadPredios();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const openDeleteModal = useCallback(
+    (id: string) => {
+      openModal(ConfirmModal, {
+        onCancel: () => closeModal(),
+        onClose: () => closeModal(),
+        title: 'Remover prédio',
+        text: 'Você deseja realmente remover este prédio?',
+        onConfirm: () => {
+          return deletePredios(id)
+            .then(() => {
+              loadPredios();
+            })
+            .finally(() => {
+              closeModal();
+            });
+        },
+        destructive: true,
+      });
+    },
+    [loadPredios]
+  );
 
   return (
     <Grid container gap={1} padding={1} flexDirection='column'>
@@ -97,39 +125,39 @@ export default function PrediosSalas() {
           onChange={(e) => setFiltro(e.target.value)}
         />
       </Grid>
-      <Grid>{loadingPredios && <CircularProgress color='secondary' />}</Grid>
+      <Grid display='flex' alignItems='center' justifyContent='center'>
+        {loadingPredios && <CircularProgress color='secondary' />}
+      </Grid>
       <Grid display='flex' flexDirection='column' item gap={1}>
         {prediosFiltrados.map((p, i) => {
           return (
             <PredioItem
               key={i}
               predio={p}
-              onDeleteClick={() => setModalOpened(true)}
+              onDeleteClick={() => openDeleteModal(p._id)}
             />
           );
         })}
       </Grid>
       <Grid>
-        {!predios.length || (filtro && !prediosFiltrados.length) ? (
+        {!loadingPredios &&
+        (!predios.length || (filtro && !prediosFiltrados.length)) ? (
           <>Nenhum prédio encontrado!</>
         ) : (
           ''
         )}
       </Grid>
       <Box position='fixed' right={12} bottom={12}>
-        <Fab color='primary' aria-label='add'>
+        <Fab
+          color='primary'
+          aria-label='add'
+          onClick={() => {
+            history.push(paths.predio);
+          }}
+        >
           <AddRounded />
         </Fab>
       </Box>
-      <ConfirmModal
-        onCancel={() => setModalOpened(false)}
-        onClose={() => setModalOpened(false)}
-        opened={modalOpened}
-        title='Remover prédio'
-        text='Você deseja realmente remover este prédio?'
-        onConfirm={() => {}}
-        destructive
-      />
     </Grid>
   );
 }

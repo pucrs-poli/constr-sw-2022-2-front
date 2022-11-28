@@ -1,54 +1,47 @@
 import {
+  CheckCircleOutlineRounded,
+  HighlightOffRounded,
+} from '@mui/icons-material';
+import {
   Button,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
 } from '@mui/material';
 import { useState } from 'react';
-import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
-import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 
-interface ConfirmModalProps {
+interface CadastroSalaProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void | Promise<any>;
+  onConfirm: () => void | Promise<void>;
   onCancel: () => void;
-  destructive?: boolean;
-  text: string;
   title: string;
 }
-
-export default function ConfirmModal(props: ConfirmModalProps) {
+export default function CadastroSalaModal(props: CadastroSalaProps) {
   const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <Dialog open={props.open} onClose={props.onClose}>
       <DialogTitle>{props.title}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>{props.text}</DialogContentText>
-      </DialogContent>
+      <DialogContent>CONTEUDO EM</DialogContent>
       <DialogActions>
         <Button
           onClick={props.onCancel}
-          startIcon={<HighlightOffRoundedIcon />}
+          startIcon={<HighlightOffRounded />}
           color='inherit'
           variant='text'
         >
           Cancelar
         </Button>
         <Button
-          color={props.destructive ? 'error' : 'primary'}
+          color='primary'
           startIcon={
             loading ? (
-              <CircularProgress
-                color={props.destructive ? 'error' : 'primary'}
-                size={20}
-              />
+              <CircularProgress color='primary' size={20} />
             ) : (
-              <CheckCircleOutlineRoundedIcon />
+              <CheckCircleOutlineRounded />
             )
           }
           onClick={() => {

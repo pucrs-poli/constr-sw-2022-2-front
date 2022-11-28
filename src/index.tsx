@@ -7,6 +7,7 @@ import Routes from 'routes/routes';
 import { loadEnvironment } from 'services/environment';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SnackbarProvider } from 'notistack';
+import ModalManager from 'components/modalManager/modalManager';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -37,6 +38,7 @@ loadEnvironment().then(() => {
       <SnackbarProvider maxSnack={4} autoHideDuration={5000}>
         <BrowserRouter>
           <AuthProvider>
+            <ModalManager />
             <Layout>
               <Routes />
             </Layout>

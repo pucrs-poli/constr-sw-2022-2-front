@@ -11,5 +11,14 @@
     "state": "RS",
     "zipCode": "90909000"
   },
-  "classrooms": []
+  "classrooms": [
+    {
+      "_id": 10,
+      "number": 310,
+      "capacity": 60,
+      "floor": 3,
+      "resource": "Cabo",
+      "building": "predio01"
+    }
+  ]
 }
