@@ -6,7 +6,7 @@ import { getEnvironment } from './environment';
 const getPrediosSalasEndpoint = () => `${getEnvironment()?.Turmas}`
 
 export const getAllTurmas = () => {
-  const url = `${getPrediosSalasEndpoint()}/building`;
+  const url = `${getTurmasEndpoint()}/turmas`;
   // TODO: DESLIGAR O mock
   return toRequest<Turmas[]>(api.get, [url], 'getTurmas', true);
 };
