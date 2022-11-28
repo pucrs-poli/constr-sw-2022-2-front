@@ -9,6 +9,8 @@ import PrediosSalas from 'pages/prediosSalas/prediosSalas';
 import Recursos from 'pages/recursos/recursos';
 import Disciplinas from 'pages/disciplinas/disciplinas';
 import Turmas from 'pages/turmas/turmas';
+import Reservas from 'pages/reservas/reservas';
+import FormReserva from 'pages/reservas/formReservas';
 import { ComponentProps, Fragment, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { REDIRECT_URL_KEY } from 'utils/html';
@@ -28,6 +30,8 @@ export const paths = {
   reservas: '/reservas',
   // Exemplo:
   cadastro: '/cadastro',
+  editarReservas: '/EditReservas/:id',
+  criarReservas: '/criarReservas',
 };
 
 const routes: RouteProps[] = [];
@@ -43,6 +47,18 @@ routes.push({
 routes.push({
   path: paths.prediosSalas,
   component: PrediosSalas,
+  exact: true,
+});
+
+routes.push({
+  path: paths.reservas,
+  component: Reservas,
+  exact: true
+});
+
+routes.push({
+  path: [paths.editarReservas, paths.criarReservas],
+  component: FormReserva,
   exact: true,
 });
 
