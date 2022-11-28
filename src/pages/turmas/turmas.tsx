@@ -1,12 +1,15 @@
 import { Breadcrumbs, Grid, Link, Typography, Container, Fab } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { Turma } from 'models/turmas';
 
 import { paths } from 'routes/routes';
-import CustomAccordion from './components/customAccordion';
+import TurmaItem from './components/turmaItem';
 import SearchHeader from './components/searchHeader';
+import { useState } from 'react';
 
 export default function Turmas() {
   const history = useHistory();
+  //const [turma, setTurmas] = useState<Turmas[]>([]);
   return (
     <Grid container gap={1} padding={1} margin={2} flexDirection='column'>
       <Grid item xs={12}>
@@ -27,7 +30,7 @@ export default function Turmas() {
       <Grid item xs={12}>
         <Container maxWidth='md' sx={{ backgroundColor: '#f5f5f5', paddingTop: "20px", paddingBottom: "20px", borderRadius: "1%"}}>
           <SearchHeader />
-          <CustomAccordion />
+          <TurmaItem />
         </Container>
       </Grid>
     </Grid>

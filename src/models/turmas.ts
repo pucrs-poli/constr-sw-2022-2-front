@@ -1,4 +1,4 @@
-export type Turmas = {
+export type Turma = {
     nome: string;
     number: number;
     semester: number;
