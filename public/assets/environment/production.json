@@ -1,4 +1,10 @@
 {
   "isOffline": false,
-  "auth": ""
+  "auth": "http://auth:8080",
+  "buildings-api": "http://buildings-api:8081",
+  "resources-api": "http://resources-api:8082",
+  "reservations-api": "http://reservations-api:8083",
+  "classes-api": "http://classes-api:8085",
+  "courses-api": "http://courses-api:8086",
+  "lessons-api": "http://lessons-api:8087"
 }
