@@ -3,7 +3,8 @@ import { toRequest } from 'utils/request';
 import { api } from './api';
 import { getEnvironment } from './environment';
 
-const getTurmasEndpoint = () => `${getEnvironment()?.Turmas}`
+//const getTurmasEndpoint = () => `${getEnvironment()?.Turma}`
+const getTurmasEndpoint = () => `${getEnvironment}`
 
 export const getAllTurmas = () => {
   const url = `${getTurmasEndpoint()}/turmas`;
