@@ -9,13 +9,13 @@ const getTurmasEndpoint = () => `${getEnvironment()}`
 export const getAllTurmas = () => {
   const url = `${getTurmasEndpoint()}/turmas`;
   // TODO: DESLIGAR O mock
-  return toRequest<Turma[]>(api.get, [url], 'getTurmas', true);
+  return toRequest<Turma[]>(api.get, [url], 'getTurmas', false);
 };
 
 export const getPredioByID = (id: string) => {
   const url = `${getTurmasEndpoint()}/turmas/${id}`;
   // TODO: Desligar o mock
-  return toRequest<Turma>(api.get, [url], 'getTurma', true);
+  return toRequest<Turma>(api.get, [url], 'getTurma', false);
 };
 
 export const postTurma = () => {

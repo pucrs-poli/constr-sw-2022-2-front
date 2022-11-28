@@ -1,8 +1,8 @@
 export type Turma = {
-    nome: string;
+    name: string;
     number: number;
     semester: number;
     year: number;
-    schdule: string;
-    discipline: string;
+    schedule: string;  // horario
+    subject: string;   // disciplina
   };
