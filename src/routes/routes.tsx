@@ -24,6 +24,7 @@ export const paths = {
   recursos: '/recursos',
   disciplinas: '/disciplinas',
   turmas: '/turmas',
+  editarTurmas: '/turmas/:id',
   aulas: '/aulas',
   reservas: '/reservas',
   // Exemplo:
