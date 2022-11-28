@@ -1,4 +1,5 @@
 {
+  "environment": "development",
   "isOffline": false,
   "auth": "http://auth:8080",
   "buildings-api": "http://buildings-api:8081",
