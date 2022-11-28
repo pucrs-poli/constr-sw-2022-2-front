@@ -12,7 +12,8 @@ let loadedEnvironment: Environment;
 export const loadEnvironment = async () => {
   try {
     const { data } = await axios.get<Environment>(
-      `/assets/environment/${process.env.NODE_ENV}.json?noCache=${getNoCache()}`
+      `/assets/environment/default.json?noCache=${getNoCache()}`
+      // `/assets/environment/${process.env.NODE_ENV}.json?noCache=${getNoCache()}`
     );
     loadedEnvironment = data;
     return data;

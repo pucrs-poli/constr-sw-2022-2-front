@@ -1,5 +1,5 @@
 {
-  "environment": "development",
+  "environment": "default",
   "isOffline": false,
   "auth": "http://localhost:8091",
   "prediosSalas": "http://localhost:8081"
