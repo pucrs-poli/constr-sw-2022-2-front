@@ -3,20 +3,19 @@ import { toRequest } from 'utils/request';
 import { api } from './api';
 import { getEnvironment } from './environment';
 
-//const getTurmasEndpoint = () => `${getEnvironment()?.Turma}`
-const getTurmasEndpoint = () => `${getEnvironment}`
+const getTurmasEndpoint = () => `${getEnvironment()?.classes}`
 
 
 export const getAllTurmas = () => {
-  const url = `${getTurmasEndpoint()}/turmas`;
+  const url = `${getTurmasEndpoint()}/classroom`;
   // TODO: DESLIGAR O mock
-  return toRequest<Turma[]>(api.get, [url], 'getTurmas', false);
+  return toRequest<Turma[]>(api.get, [url], 'turmas', false);
 };
 
-export const getPredioByID = (id: string) => {
-  const url = `${getTurmasEndpoint()}/turmas/${id}`;
+export const getTurmaByID = (id: string) => {
+  const url = `${getTurmasEndpoint()}/classroom/${id}`;
   // TODO: Desligar o mock
-  return toRequest<Turma>(api.get, [url], 'getTurma', false);
+  return toRequest<Turma>(api.get, [url], 'turma', false);
 };
 
 export const postTurma = () => {
