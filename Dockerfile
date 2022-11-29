@@ -1,6 +1,8 @@
 FROM node:14.20.1
-RUN npm install express
-RUN mkdir /build
-COPY /build /build
-COPY server.js .
-CMD node server
+# Copiar Package.json e Package-lock.json
+COPY package*.json .
+# Roda o 'npm install' sem sobrescrever package-lock.json
+RUN npm ci
+# Copiar os arquivos
+COPY . .
+CMD ["node", "server"]
