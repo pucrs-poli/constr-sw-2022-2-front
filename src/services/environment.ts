@@ -4,6 +4,12 @@ import { getNoCache } from 'utils/request';
 interface Environment {
   isOffline: boolean;
   auth: string;
+  buildings: string;
+  resources: string;
+  reservations: string;
+  classes: string;
+  courses: string;
+  lessons: string;
 }
 
 let loadedEnvironment: Environment;
