@@ -1,4 +1,11 @@
 {
+  "environment": "production",
   "isOffline": false,
-  "auth": ""
+  "auth": "http://auth:8080",
+  "buildings": "http://buildings-api:8081",
+  "resources": "http://resources-api:8082",
+  "reservations": "http://reservations-api:8083",
+  "classes": "http://classes-api:8085",
+  "courses": "http://courses-api:8086",
+  "lessons": "http://lessons-api:8087"
 }

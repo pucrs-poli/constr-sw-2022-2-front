@@ -4,6 +4,12 @@ import { getNoCache } from 'utils/request';
 interface Environment {
   isOffline: boolean;
   auth: string;
+  buildings: string;
+  resources: string;
+  reservations: string;
+  classes: string;
+  courses: string;
+  lessons: string;
 }
 
 let loadedEnvironment: Environment;
@@ -11,7 +17,8 @@ let loadedEnvironment: Environment;
 export const loadEnvironment = async () => {
   try {
     const { data } = await axios.get<Environment>(
-      `/assets/environment/${process.env.NODE_ENV}.json?noCache=${getNoCache()}`
+      `/assets/environment/default.json?noCache=${getNoCache()}`
+      // `/assets/environment/${process.env.NODE_ENV}.json?noCache=${getNoCache()}`
     );
     loadedEnvironment = data;
     return data;

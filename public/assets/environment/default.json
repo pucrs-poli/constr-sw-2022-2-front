@@ -1,5 +1,5 @@
 {
-  "environment": "development",
+  "environment": "default",
   "isOffline": false,
   "auth": "http://auth:8080",
   "buildings": "http://buildings-api:8081",
