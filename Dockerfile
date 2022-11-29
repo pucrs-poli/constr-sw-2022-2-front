@@ -5,4 +5,6 @@ COPY package*.json .
 RUN npm ci
 # Copiar os arquivos
 COPY . .
+# Roda a build do Front
+RUN npm run build
 CMD ["node", "server"]
