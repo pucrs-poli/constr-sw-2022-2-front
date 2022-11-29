@@ -3,17 +3,15 @@ import { toRequest } from 'utils/request';
 import { api } from './api';
 import { getEnvironment } from './environment';
 
-const getPrediosSalasEndpoint = () => `${getEnvironment()?.prediosSalas}`;
+const getPrediosSalasEndpoint = () => `${getEnvironment()?.buildings}`;
 
 export const getAllPredios = () => {
   const url = `${getPrediosSalasEndpoint()}/building`;
-  // TODO: DESLIGAR O mock
   return toRequest<Predio[]>(api.get, [url], 'getPredios', false);
 };
 
 export const getPredioByID = (id: string) => {
   const url = `${getPrediosSalasEndpoint()}/building/${id}`;
-  // TODO: Desligar o mock
   return toRequest<Predio>(api.get, [url], 'getPredio', false);
 };
 
