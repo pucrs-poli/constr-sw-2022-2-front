@@ -163,7 +163,11 @@ export default function Recursos() {
                         setSelectedResource(rec);
                         setDescriptionEdit(rec.description || '');
                         setStatusEdit(rec.status || '');
-                        setDetailsEdit(rec.details ? rec.details[0].name : '');
+                        setDetailsEdit(
+                          rec.details && rec.details.length > 0
+                            ? rec.details[0].name
+                            : ''
+                        );
                         setEditModalOpen(true);
                       }}
                     >
@@ -449,14 +453,21 @@ export default function Recursos() {
                     id: selectedResource?.resourceType.id,
                     name: selectedResource?.resourceType.name || '',
                   },
-                  details: selectedResource?.details
-                    ? [
-                        {
-                          id: selectedResource?.details[0].id,
-                          name: detailsEdit,
-                        },
-                      ]
-                    : undefined,
+                  details:
+                    selectedResource?.details &&
+                    selectedResource.details.length > 0
+                      ? [
+                          {
+                            id: selectedResource?.details[0].id,
+                            name: detailsEdit,
+                          },
+                        ]
+                      : [
+                          {
+                            id: 1,
+                            name: detailsEdit,
+                          },
+                        ],
                 };
                 try {
                   resourcesServiceBack.update(updateResource);
