@@ -22,7 +22,7 @@ export default class ResourcesAPIStub implements ResourcesAPIInterface {
     },
     {
       id: 2,
-      description: 'Recurso 1',
+      description: 'Recurso 2',
       status: 'Disponible',
       resourceType: {
         id: 1,
@@ -37,7 +37,7 @@ export default class ResourcesAPIStub implements ResourcesAPIInterface {
     },
     {
       id: 3,
-      description: 'Recurso 1',
+      description: 'Recurso 3',
       status: 'Disponible',
       resourceType: {
         id: 2,

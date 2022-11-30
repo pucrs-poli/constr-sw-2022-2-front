@@ -20,7 +20,8 @@ import { paths } from 'routes/routes';
 import { toRequest } from 'utils/request';
 import AddIcon from '@mui/icons-material/Add';
 import ConfirmModal from 'components/confirmModal/confirmModal';
-
+import ReservaService from '../../services/reservas/ReservaService';
+import ReservaApiStub from '../../services/reservas/ReservaApiStub';
 
 export default function Reservas() {
   const history = useHistory();
@@ -28,69 +29,46 @@ export default function Reservas() {
   const [loadingReservas, setLoadingReservas] = useState<boolean>(true);
   const [filtro, setFiltro] = useState<string>('');
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const reservasServiceBack = new ReservaService(new ReservaApiStub());
+  const [deleteId, setDeleteId ] = useState<number>(0);
+
+  const getReservas = async () => {
+    const response = await reservasServiceBack.getAll();
+    setReservas(response);
+    setLoadingReservas(false);
+    console.log(response);
+  };
+
+  const deleteItem = async (reserva: any) => {
+    setModalOpened(true)
+    setDeleteId(reserva.id);
+  };
+
+  const closeModal = async () => {
+    await reservasServiceBack.delete(deleteId);
+    getReservas();
+    setModalOpened(false);
+  };
+
+  useEffect(() => {
+    setLoadingReservas(true);
+    getReservas();
+    
+  }, []);
 
   const reservasFiltradas = useMemo(
     () =>
       reservas.filter(
         (p) =>
           !filtro ||
-          p.recurso.name.trim().toLowerCase().includes(filtro.trim().toLowerCase()) ||
-          p.observacao
+          p.resource.description.trim().toLowerCase().includes(filtro.trim().toLowerCase()) ||
+          p.observation
             .trim()
             .toLowerCase()
             .includes(filtro.trim().toLowerCase())
       ),
     [filtro, reservas]
   );
-
-  const loadReservas = useCallback(async () => {
-    setLoadingReservas(true);
-    try {
-      // const req = await getAllReservas();
-      setReservas([
-        {
-          _id: '1234',
-          observacao: 'Alocação recurso 1',
-          aula: '1234',
-          recurso: {
-            name: 'Recurso 1'
-          },
-          data: '20/02/2023',
-          active: true,
-        },
-        {
-          _id: '1234',
-          observacao: 'Alocação recurso 2',
-          aula: '1234',
-          recurso: {
-            name: 'Recurso 2'
-          },
-          data: '20/02/2023',
-          active: true,
-        },
-        {
-          _id: '1234',
-          observacao: 'Alocação recurso 3',
-          aula: '1234',
-          recurso: {
-            name: 'Recurso 3'
-          },
-          data: '20/02/2023',
-          active: true,
-        },
-      ]);
-    } catch (err) {
-      // TODO: ERR MESSAGE
-      console.log('ALERTA DE ERRO', err);
-    } finally {
-      setLoadingReservas(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadReservas();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Grid container gap={1} padding={1} flexDirection='column'>
@@ -149,7 +127,7 @@ export default function Reservas() {
             <ReservaItem
               key={i}
               reserva={p}
-              onDeleteClick={() => setModalOpened(true)}
+              onDeleteClick={() => deleteItem(p)}
             />
           );
         })}
@@ -167,7 +145,7 @@ export default function Reservas() {
         opened={modalOpened}
         title='Remover prédio'
         text='Você deseja realmente remover este prédio?'
-        onConfirm={() => {setModalOpened(false)}}
+        onConfirm={() => {closeModal()}}
         destructive
       />
     </Grid>

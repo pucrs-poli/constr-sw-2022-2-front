@@ -18,16 +18,16 @@ export default function ReservaItem({
   return (
     <div className={rootClassName}>
       <div className={`${rootClassName}-info`}>
-        <div>{reserva.recurso.name} - {reserva.data}</div>
+        <div>{reserva.resource.description} - {reserva.data}</div>
         <div className={`${rootClassName}-rooms`}>
-            {reserva.observacao}
+            {reserva.observation}
         </div>
       </div>
       <div className={`${rootClassName}-actions`}>
         <IconButton
           color='default'
           onClick={() => {
-           history.push(paths.editarReservas.replace(':id', '1'));
+           history.push(paths.editarReservas.replace(':id', reserva.resource.id));
           }}
         >
           <EditRounded />

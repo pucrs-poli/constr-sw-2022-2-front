@@ -1,9 +1,15 @@
 import { Breadcrumbs, Grid, Link, Typography } from '@mui/material';
-import { Reserva as ReservaType } from 'models/reserva';
+import { Reserva, Reserva as ReservaType } from 'models/reserva';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { paths } from 'routes/routes';
 import { AddRounded, SearchRounded } from '@mui/icons-material';
+import ResourcesService from 'services/recursos/ResourcesService';
+import ResourcesAPIStub from '../../services/recursos/ResourcesAPIStub';
+import ReservaService from '../../services/reservas/ReservaService';
+import ReservaApiStub from '../../services/reservas/ReservaApiStub';
+import { Resource, ResourceType } from 'models/resource';
+
 import {
     TextField, Select, MenuItem, FormControl, InputLabel, Button, Snackbar, Alert
   } from '@mui/material';
@@ -13,17 +19,34 @@ import ConfirmModal from 'components/confirmModal/confirmModal';
 export default function FormReserva() {
   const history = useHistory();
   const param = useParams<{ id: string }>();
-
+  const resourcesServiceBack = new ResourcesService(new ResourcesAPIStub());
+  const reservasServiceBack = new ReservaService(new ReservaApiStub());
   const [reserva, setReserva] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [observacao, setObservacao] = useState<string>('');
   const [data, setData] = useState<string>('');
-  const [recursos, setRecursos] = useState<any>([]);
+  const [resources, setResources] = useState<Resource[]>([]);
   const [aulas, setAulas] = useState<any>([]);
   const [recurso, setRecurso ] = useState<any>({});
   const [aula, setAula ] = useState<any>({});
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [errorOpened, setErrorOpened] = useState<boolean>(false);
+  const getAllResources = async () => {
+    const response = await resourcesServiceBack.getAll();
+    setResources(response);
+    console.log(response);
+  };
+  const getReserva = async () => {
+    const response = await reservasServiceBack.getOne(parseInt(param.id));
+    console.log(response);
+    if(response !== undefined){
+      setReserva(response);
+      setRecurso(response.resource);
+      setAula(response.class);
+      setObservacao(response.observation);
+      setData(response.data);
+    }
+  };
 
   const loadReserva = useCallback(async () => {
     setLoading(true);
@@ -31,19 +54,19 @@ export default function FormReserva() {
       // const req = await getreservaByID(param.id);
       const req = {
         _id: '1234',
-        observacao: 'Alocação recurso 1',
-        aula: {"name": "Algoritmos 1"},
-        recurso: {
-          name: 'Recurso 1'
+        observation: 'Alocação recurso 1',
+        class: {"name": "Algoritmos 1"},
+        resource: {
+          description: 'Recurso 1',
         },
         data: '20/02/2023',
         active: true,
       };
 
       setReserva(req);
-      setRecurso(req.recurso);
-      setAula(req.aula);
-      setObservacao(req.observacao);
+      setRecurso(req.resource);
+      setAula(req.class);
+      setObservacao(req.observation);
       setData(req.data);
     } catch (error) {
       // TODO: ERROR MESSAGE
@@ -54,18 +77,13 @@ export default function FormReserva() {
 
   useEffect(() => {
     if(param.id){
-        loadReserva();
+        getReserva();
     }
-    setRecursos([
-        {"name": "Recurso 1"},
-        {"name": "Recurso 2"},
-        {"name": "Recurso 3"},
-        {"name": "Recurso 4"},
-    ]);
+    getAllResources();
     setAulas([
-        {"name": "Algoritmos 1"},
-        {"name": "Calculo 1"},
-        {"name": "Paralela 1"},
+        {"name": "Algoritmos 1", "id":"1"},
+        {"name": "Calculo 1", "id":"2"},
+        {"name": "Paralela 1", "id":"3"},
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -80,7 +98,8 @@ export default function FormReserva() {
     }
 
     if (reserva) {
-      return reserva.recurso.name + ' - ' +reserva.data;
+      console.log(reserva);
+      return reserva.resource.description + ' - ' +reserva.data;
     }
 
     return '';
@@ -133,10 +152,10 @@ export default function FormReserva() {
                 <em>None</em>
             </MenuItem>
             {
-                recursos.map((r:any,i:number) => {
+                resources.map((r:any,i:number) => {
                     return (
                         <MenuItem key={i} value={r}>
-                            {r.name}
+                            {r.description}
                         </MenuItem>
                     );
                 })
@@ -210,24 +229,24 @@ export default function FormReserva() {
                 setErrorOpened(true);
             }else if(param.id){
                 payload= {
-                    id: reserva._id,
+                    id: reserva.id,
                     observation: observacao,
-                    class_id: '1',
-                    resource_id: '1',
+                    class_id: 1,
+                    resource_id: recurso.id,
                     data: data,
                     active: true,
                 };
-                console.log(payload);
+                const response = reservasServiceBack.update(payload);
                 history.push(paths.reservas);
             }else if(!param.id) {
                 payload = {
                     observation: observacao,
-                    class_id: '1',
-                    resource_id: '1',
+                    class_id: 1,
+                    resource_id: recurso.id,
                     data: data,
                     active: true,
                 }
-                console.log(payload);
+                const response = reservasServiceBack.create(payload);
                 history.push(paths.reservas);
             }
             //to do: enviar o post para salvar a reserva no backend

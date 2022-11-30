@@ -1,8 +1,8 @@
 export type Reserva = {
-    _id: string,
-    observacao: string,
-    aula: any,
-    recurso: any,
+    id: number,
+    observation: string,
+    class: any,
+    resource: any,
     active: boolean,
     data: string,
 }
