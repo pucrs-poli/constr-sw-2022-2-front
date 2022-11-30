@@ -91,4 +91,15 @@ export default class ResourcesAPI implements ResourcesAPIInterface {
       return undefined;
     }
   }
+
+  public async update(resource: Resource): Promise<number | undefined> {
+    try {
+      await axios.patch(`${BASE_URL}/${resource.id}`);
+      return resource.id;
+    } catch (error) {
+      console.error(error);
+      return -1;
+    }
+  }
+
 }

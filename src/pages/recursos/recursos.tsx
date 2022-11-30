@@ -22,7 +22,7 @@ import SpeedDialCustom from './components/speedDialCustom';
 import { paths } from 'routes/routes';
 import ResourcesService from 'services/recursos/ResourcesService';
 import ResourcesAPIStub from '../../services/recursos/ResourcesAPIStub';
-// import ResourcesAPI from '../../services/recursos/ResourcesAPI';
+import ResourcesAPI from '../../services/recursos/ResourcesAPI';
 import { useEffect, useState } from 'react';
 import { Resource, ResourceType } from 'models/resource';
 
@@ -64,9 +64,14 @@ export default function Recursos() {
   const [selectedResource, setSelectedResource] = useState<Resource>();
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
+
+  const [descriptionEdit, setDescriptionEdit] = useState('');
+  const [statusEdit, setStatusEdit] = useState('');
+  const [detailsEdit, setDetailsEdit] = useState('');
 
   const [createModal2Open, setCreateModal2Open] = useState(false);
 
@@ -152,15 +157,18 @@ export default function Recursos() {
                     <p>Tipo do Recurso: {rec.resourceType.name}</p>
                   </Grid>
                   <Grid item>
-                    {/* Quando clica no botao ele ta pegando o card que esta atras */}
-                    <IconButton
+                    <Button
                       onClick={(e) => {
                         e.stopPropagation();
-                        alert('Funcionalidade ainda não implementada.');
+                        setSelectedResource(rec);
+                        setDescriptionEdit(rec.description || '');
+                        setStatusEdit(rec.status || '');
+                        setDetailsEdit(rec.details ? rec.details[0].name : '');
+                        setEditModalOpen(true);
                       }}
                     >
                       <EditIcon style={{ color: 'Grey', fontSize: 30 }} />
-                    </IconButton>
+                    </Button>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -390,6 +398,77 @@ export default function Recursos() {
               }}
             >
               Resetar Filtros
+            </Button>
+          </>
+        </Box>
+      </Modal>
+      <Modal
+        open={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+        }}
+      >
+        <Box sx={style}>
+          <>
+            <Typography id='modal-modal-title' variant='h6' component='h2'>
+              Editar Recurso
+            </Typography>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Descrição'
+              value={descriptionEdit}
+              onChange={(e) => {
+                setDescriptionEdit(e.target.value);
+              }}
+            ></TextField>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Status'
+              value={statusEdit}
+              onChange={(e) => {
+                setStatusEdit(e.target.value);
+              }}
+            ></TextField>
+            <TextField
+              style={{ marginTop: '30px', width: '100%' }}
+              label='Detalhe'
+              value={detailsEdit}
+              onChange={(e) => {
+                setDetailsEdit(e.target.value);
+              }}
+            ></TextField>
+            <Button
+              style={{ marginTop: '30px', width: '100%' }}
+              variant='contained'
+              onClick={() => {
+                const updateResource: Resource = {
+                  id: selectedResource?.id,
+                  description: descriptionEdit,
+                  status: statusEdit,
+                  resourceType: {
+                    id: selectedResource?.resourceType.id,
+                    name: selectedResource?.resourceType.name || '',
+                  },
+                  details: selectedResource?.details
+                    ? [
+                        {
+                          id: selectedResource?.details[0].id,
+                          name: detailsEdit,
+                        },
+                      ]
+                    : undefined,
+                };
+                try {
+                  resourcesServiceBack.update(updateResource);
+                  setEditModalOpen(false);
+                  getAllResourcesAndTypes();
+                  alert('Recurso editado com sucesso!');
+                } catch (error) {
+                  alert('Erro ao editar recurso!');
+                }
+              }}
+            >
+              Editar
             </Button>
           </>
         </Box>

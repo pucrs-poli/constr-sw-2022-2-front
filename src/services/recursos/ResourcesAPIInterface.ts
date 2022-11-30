@@ -7,4 +7,5 @@ export default interface ResourcesAPIInterface {
   delete(id: number): Promise<number>;
   getAllTypes(): Promise<ResourceType[]>;
   createTypeResource(resourceType: ResourceType): Promise<boolean | undefined>;
+  update(resource: Resource): Promise<number | undefined>;
 }

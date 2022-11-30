@@ -29,4 +29,8 @@ export default class ResourcesService {
   ): Promise<boolean | undefined> {
     return await this.api.createTypeResource(resourceType);
   }
+
+  public async update(resource: Resource): Promise<number | undefined> {
+    return await this.api.update(resource);
+  }
 }

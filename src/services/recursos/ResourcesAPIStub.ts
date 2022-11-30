@@ -100,4 +100,17 @@ export default class ResourcesAPIStub implements ResourcesAPIInterface {
     ResourcesAPIStub.exampleResourcesTypes.push(resourceType);
     return true;
   }
+
+  public async update(resource: Resource): Promise<number | undefined> {
+    const resourceToUpdate = ResourcesAPIStub.exampleResources.find(
+      (res) => res.id === resource.id
+    );
+    if (!resourceToUpdate) return undefined;
+    resourceToUpdate.id = resource.id;
+    resourceToUpdate.description = resource.description;
+    resourceToUpdate.details = resource.details;
+    resourceToUpdate.resourceType = resource.resourceType;
+    resourceToUpdate.status = resource.status;
+    return resource.id;
+  }
 }
