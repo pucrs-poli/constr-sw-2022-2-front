@@ -1,11 +1,11 @@
 {
   "environment": "default",
   "isOffline": false,
-  "auth": "http://auth:8080",
-  "buildings": "http://buildings-api:8081",
-  "resources": "http://resources-api:8082",
-  "reservations": "http://reservations-api:8083",
-  "classes": "http://classes-api:8085",
-  "courses": "http://courses-api:8086",
-  "lessons": "http://lessons-api:8087"
+  "auth": "http://localhost/api",
+  "buildings": "http://localhost/api",
+  "resources": "http://localhost/api",
+  "reservations": "http://localhost/api",
+  "classes": "http://localhost/api",
+  "courses": "http://localhost/api",
+  "lessons": "http://localhost/api"
 }

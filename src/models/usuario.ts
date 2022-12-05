@@ -2,6 +2,7 @@ export enum GrupoUsuario {
   Estudante = '/alunos',
   Professor = '/professores',
   Coordenador = '/coordenadores',
+  Admin = '/admin',
 }
 
 export type TokenType = {

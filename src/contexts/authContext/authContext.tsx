@@ -12,8 +12,12 @@ import {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import { paths } from 'routes/routes';
-import { postLogin, getUserInfo, postRefreshToken } from 'services/auth';
-import { REDIRECT_URL_KEY, TOKEN_STORAGE_KEY } from 'utils/html';
+import { getUserInfo, postLogin, postRefreshToken } from 'services/auth';
+import {
+  REDIRECT_URL_KEY,
+  TOKEN_EXPIRES_AT_STORAGE_KEY,
+  TOKEN_STORAGE_KEY,
+} from 'utils/html';
 
 interface Auth {
   userData?: UsuarioType;
@@ -37,7 +41,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [permission, setPermission] = useState<Permission>();
   const history = useHistory();
   const timerRef = useRef<NodeJS.Timeout | undefined>();
-
   const { enqueueSnackbar } = useSnackbar();
 
   const userReceivedData = useCallback(
@@ -67,6 +70,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     setPermission(undefined);
     setUserData(undefined);
     localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(TOKEN_EXPIRES_AT_STORAGE_KEY);
     history.push(paths.loginPage);
     if (timerRef.current) {
       clearTimeout(timerRef.current);
@@ -76,11 +80,21 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const handleRefreshToken = useCallback(
     (token: TokenType) => {
+      const expires_at = parseInt(
+        localStorage.getItem(TOKEN_EXPIRES_AT_STORAGE_KEY) ??
+          String(token.expires_in)
+      );
+      const diff = expires_at - new Date().getTime();
+      if (diff < 600) {
+        logout();
+      }
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(async () => {
         try {
           const req = await postRefreshToken(token.refresh_token);
           localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(req.data));
+          const time = new Date().getTime() + req.data.expires_in * 1000;
+          localStorage.setItem(TOKEN_EXPIRES_AT_STORAGE_KEY, String(time));
           handleRefreshToken(req.data);
         } catch (err) {
           enqueueSnackbar(
@@ -91,7 +105,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
           );
           logout();
         }
-      }, token.expires_in * 1000 - 600);
+      }, diff - 600);
     },
     [enqueueSnackbar, logout]
   );
@@ -103,6 +117,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         const login = await postLogin(username, encryptedPassword);
         handleRefreshToken(login.data);
         localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(login.data));
+        const time = new Date().getTime() + login.data.expires_in * 1000;
+        localStorage.setItem(TOKEN_EXPIRES_AT_STORAGE_KEY, String(time));
         const userinfo = await getUserInfo();
         userReceivedData(userinfo.data);
       } catch (err) {
@@ -122,6 +138,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       getUserInfo()
         .then((resp) => {
           userReceivedData(resp.data);
+          handleRefreshToken(
+            JSON.parse(localStorage.getItem(TOKEN_STORAGE_KEY))
+          );
         })
         .catch(() => {
           logout();
