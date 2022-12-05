@@ -14,7 +14,7 @@ export default function ItemSala(props: ItemSalaProps) {
     <Grid item xs={12} className={rootClassName}>
       <div className={`${rootClassName}-info`}>
         <div>
-          {props.sala.floor}° Andar - Sala{props.sala.number}
+          {props.sala.floor}° Andar - Sala {props.sala.number}
         </div>
         <div className={`${rootClassName}-capacity`}>
           Capacidade: {props.sala.capacity}
