@@ -16,7 +16,7 @@ $rootClassName: sala-item-component;
   .#{$rootClassName}-info {
     display: flex;
     flex-direction: column;
-    .#{$rootClassName}-rooms {
+    .#{$rootClassName}-capacity {
       padding-top: 2px;
       opacity: 0.3;
     }

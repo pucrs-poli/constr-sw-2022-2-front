@@ -1,7 +1,9 @@
-import { Endereco, Predio } from 'models/prediosSalas';
+import { Endereco, Predio, Sala } from 'models/prediosSalas';
 
 type StateType = {
   predio: Partial<Predio>;
+  editedClassRooms: string[];
+  deletedClassrooms: string[];
   loading: boolean;
   loadingAddress: boolean;
 };
@@ -16,6 +18,8 @@ export const PredioInitialState = {
     address: {},
     classrooms: [],
   },
+  editedClassRooms: [],
+  deletedClassrooms: [],
   loading: false,
   loadingAddress: false,
 } as StateType;
@@ -27,6 +31,10 @@ export default function PredioReducer(
     | GenericType<'setLoadingAddress', boolean>
     | GenericType<'setCampo', Partial<Predio>>
     | GenericType<'setEndereco', Partial<Endereco>>
+    | GenericType<'addSala', Partial<Sala>>
+    | GenericType<'editSala', { sala: Partial<Sala>; index: number }>
+    | GenericType<'deleteSala', { index?: number; id?: string }>
+    | { type: 'clearSalaHistory'; payload?: never }
 ): StateType {
   const { type, payload } = action;
   switch (type) {
@@ -44,6 +52,26 @@ export default function PredioReducer(
           address: { ...state.predio.address, ...payload },
         },
       };
+    case 'addSala':
+      state.predio.classrooms.push(payload as Sala);
+      return {
+        ...state,
+      };
+    case 'editSala':
+      state.editedClassRooms.push(payload.sala._id);
+      state.predio.classrooms[payload.index] = payload.sala;
+      return { ...state };
+    case 'deleteSala':
+      if (payload.id) {
+        state.deletedClassrooms.push(payload.id);
+      } else {
+        state.predio.classrooms.splice(payload.index, 1);
+      }
+      return { ...state };
+    case 'clearSalaHistory':
+      state.deletedClassrooms = [];
+      state.editedClassRooms = [];
+      return { ...state };
     default:
       throw new Error();
   }

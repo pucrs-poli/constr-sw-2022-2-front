@@ -12,15 +12,24 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import ConfirmModal from 'components/confirmModal/confirmModal';
 import { closeModal, openModal } from 'components/modalManager/modalManager';
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { paths } from 'routes/routes';
 import { getCEPInfo } from 'services/cep';
-import { getPredioByID, postPutPredio } from 'services/prediosSalas';
+import {
+  deleteSalas,
+  getPredioByID,
+  postPutPredio,
+  postSala,
+  putSala,
+} from 'services/prediosSalas';
 import { formatCEP, getUnmaskedNumber } from 'utils/format';
+import { getUniqueKey } from 'utils/html';
 import CadastroSalaModal from './components/cadastroSalaModal/cadastroSalaModal';
+import ItemSala from './components/itemSala/ItemSala';
 import PredioReducer, { PredioInitialState } from './predioReducer';
 
 export default function Predio() {
@@ -65,7 +74,37 @@ export default function Predio() {
     dispatch({ type: 'setLoading', payload: true });
     try {
       const hasid = Boolean(state.predio._id);
-      const req = await postPutPredio(state.predio);
+      const req = await postPutPredio({
+        ...state.predio,
+        classrooms: state.predio.classrooms
+          .filter((s) => s._id)
+          .map((s) => s._id),
+      } as any);
+
+      // Aqui vamos atualizar as salas
+      const novasSalas = state.predio.classrooms.filter((s) => !s._id);
+      await Promise.all(
+        novasSalas.map((ns) => {
+          return postSala({ ...ns, building: req.data._id });
+        })
+      );
+
+      if (state.editedClassRooms.length) {
+        const editadas = state.predio.classrooms.filter(
+          (s) => s._id && state.editedClassRooms.includes(s._id)
+        );
+
+        await Promise.all(
+          editadas.map((se) => {
+            return putSala(se);
+          })
+        );
+      }
+
+      if (state.deletedClassrooms.length) {
+        await deleteSalas(...state.deletedClassrooms);
+      }
+
       dispatch({ type: 'setCampo', payload: req.data });
       enqueueSnackbar(
         hasid ? 'Alterações salvas!' : 'Prédio criado com sucesso!',
@@ -77,7 +116,19 @@ export default function Predio() {
     } finally {
       dispatch({ type: 'setLoading', payload: false });
     }
-  }, [enqueueSnackbar, history, state.predio]);
+  }, [
+    enqueueSnackbar,
+    history,
+    state.deletedClassrooms,
+    state.editedClassRooms,
+    state.predio,
+  ]);
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: 'clearSalaHistory' });
+    };
+  }, []);
 
   return (
     <Grid container gap={1} padding={1} flexDirection='column'>
@@ -291,9 +342,12 @@ export default function Predio() {
             startIcon={<AddCircleOutlineRounded />}
             disabled={state.loading}
             onClick={() => {
-              const mk = `modal_${(Math.random() * 1000).toFixed(0)}`;
+              const mk = `modal_${getUniqueKey()}`;
               openModal(CadastroSalaModal, {
-                onConfirm: () => {},
+                onConfirm: (sala) => {
+                  dispatch({ type: 'addSala', payload: sala });
+                  closeModal(mk);
+                },
                 onCancel: () => {
                   closeModal(mk);
                 },
@@ -301,18 +355,75 @@ export default function Predio() {
                   closeModal(mk);
                 },
                 key: mk,
-                title: 'Cadastro de sala',
               });
             }}
           >
             Adicionar sala
           </Button>
         </Grid>
-        <Grid item xs={12}>
+        <Grid
+          item
+          xs={12}
+          display='flex'
+          flexDirection='row'
+          flexWrap='wrap'
+          gap={1}
+        >
           {state.predio.classrooms && state.predio.classrooms.length
-            ? state.predio.classrooms.map((sala, index) => {
-                return <div key={index}>{sala.number}</div>;
-              })
+            ? state.predio.classrooms
+                .map((s, index) => {
+                  return { sala: s, index };
+                })
+                .filter((s) => !state.deletedClassrooms.includes(s.sala._id))
+                .map((s) => {
+                  return (
+                    <ItemSala
+                      sala={s.sala}
+                      key={
+                        s.sala._id ??
+                        `${s.sala.floor}-${s.sala.number}-${s.index}`
+                      }
+                      onEditClick={() => {
+                        const mk = `modal_${getUniqueKey()}`;
+                        openModal(CadastroSalaModal, {
+                          sala: s.sala,
+                          onConfirm: (sala) => {
+                            dispatch({
+                              type: 'editSala',
+                              payload: { sala, index: s.index },
+                            });
+                            closeModal(mk);
+                          },
+                          onCancel: () => {
+                            closeModal(mk);
+                          },
+                          onClose: () => {
+                            closeModal(mk);
+                          },
+                          key: mk,
+                        });
+                      }}
+                      onDeleteClick={() => {
+                        const mk = `modal_${getUniqueKey()}`;
+                        openModal(ConfirmModal, {
+                          key: mk,
+                          onCancel: () => closeModal(mk),
+                          onClose: () => closeModal(mk),
+                          title: 'Remover sala',
+                          text: 'Você deseja realmente remover esta sala? Essa alteração só será confirmada quando você salvar as alterações.',
+                          onConfirm: () => {
+                            dispatch({
+                              type: 'deleteSala',
+                              payload: { id: s.sala._id, index: s.index },
+                            });
+                            closeModal(mk);
+                          },
+                          destructive: true,
+                        });
+                      }}
+                    />
+                  );
+                })
             : 'Nenhuma sala!'}
         </Grid>
       </Grid>
@@ -329,6 +440,7 @@ export default function Predio() {
           startIcon={<HighlightOffRounded />}
           color='inherit'
           onClick={() => {
+            dispatch({ type: 'clearSalaHistory' });
             history.push(paths.prediosSalas);
           }}
         >
@@ -339,7 +451,7 @@ export default function Predio() {
           variant='contained'
           startIcon={
             state.loading ? (
-              <CircularProgress size={20} />
+              <CircularProgress size={20} color='inherit' />
             ) : (
               <CheckCircleOutlineRounded />
             )

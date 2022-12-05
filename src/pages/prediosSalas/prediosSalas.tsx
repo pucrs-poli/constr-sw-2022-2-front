@@ -126,7 +126,7 @@ export default function PrediosSalas() {
         />
       </Grid>
       <Grid display='flex' alignItems='center' justifyContent='center'>
-        {loadingPredios && <CircularProgress color='secondary' />}
+        {loadingPredios && <CircularProgress color='primary' />}
       </Grid>
       <Grid display='flex' flexDirection='column' item gap={1}>
         {prediosFiltrados.map((p, i) => {

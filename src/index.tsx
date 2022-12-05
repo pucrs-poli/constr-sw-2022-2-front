@@ -35,7 +35,11 @@ const theme = createTheme({
 loadEnvironment().then(() => {
   root.render(
     <ThemeProvider theme={theme}>
-      <SnackbarProvider maxSnack={4} autoHideDuration={5000}>
+      <SnackbarProvider
+        maxSnack={4}
+        autoHideDuration={5000}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      >
         <BrowserRouter>
           <AuthProvider>
             <ModalManager />

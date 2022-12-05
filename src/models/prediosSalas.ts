@@ -9,7 +9,7 @@ export type Endereco = {
 };
 
 export type Sala = {
-  _id: string;
+  _id?: string;
   number: number;
   capacity: number;
   floor: number;
@@ -22,5 +22,5 @@ export type Predio = {
   name: string;
   number: number;
   address: Endereco;
-  classrooms: Sala[];
+  classrooms: Partial<Sala>[];
 };
